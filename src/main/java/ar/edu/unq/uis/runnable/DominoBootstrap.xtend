@@ -13,11 +13,13 @@ class DominoBootstrap  extends CollectionBasedBootstrap {
 	override run() {
 		val repoPizza = ApplicationContext.instance.getSingleton(typeof(Pizza)) as RepoPizza
 		
-		//val pizzaCapresse = repoPizza.createPromo("capresse",10.0)
-		
 		repoPizza => [
 			createPromo("capresse", 15.0)
-			
+			createPromo("palmitos",20.0)
+			createPromo("jamonYQueso", 25.0)
+			createPromo("jamonYMorrones", 30.0)
+			createPromo("anana",35.0)
+			createPromo("calabresa", 40.0)
 		]
 		
 	}
