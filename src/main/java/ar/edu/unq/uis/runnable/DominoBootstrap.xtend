@@ -14,12 +14,12 @@ class DominoBootstrap  extends CollectionBasedBootstrap {
 		val repoPizza = ApplicationContext.instance.getSingleton(typeof(Pizza)) as RepoPizza
 		
 		repoPizza => [
-			createPromo("capresse", 15.0)
-			createPromo("palmitos",20.0)
-			createPromo("jamonYQueso", 25.0)
-			createPromo("jamonYMorrones", 30.0)
-			createPromo("anana",35.0)
-			createPromo("calabresa", 40.0)
+			createPromo("Capresse", 15.0)
+			createPromo("Palmitos",20.0)
+			createPromo("Jamon y queso", 25.0)
+			createPromo("Jamon y morrones", 30.0)
+			createPromo("Anana",35.0)
+			createPromo("Calabresa", 40.0)
 		]
 		
 	}

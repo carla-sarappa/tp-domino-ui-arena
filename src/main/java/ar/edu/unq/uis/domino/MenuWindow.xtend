@@ -13,6 +13,7 @@ import org.uqbar.arena.bindings.NotNullObservable
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.layout.VerticalLayout
 
 class MenuWindow extends SimpleWindow<Menu> {
 	
@@ -24,18 +25,51 @@ class MenuWindow extends SimpleWindow<Menu> {
 		title = "Domino Pizza - Menu"
 		taskDescription = "Elegi tu promo"
 
+		
 		super.createMainTemplate(mainPanel)
+	}
+	
+	override protected addActions(Panel actionsPanel) {
+		
+		new Button(actionsPanel) => [
+			caption = "Cerrar"
+			onClick([|])
+			
+		]
+	}
+	
+	def addPanelActions(Panel actionsPanel) {
+		new Button(actionsPanel) => [
+			caption = "Crear"
+			onClick([|])
+		]
+		
+		new Button(actionsPanel) => [
+			caption = "Editar"
+			onClick([|])
+			
+		]
 
-		this.createResultsGrid(mainPanel)
+		new Button(actionsPanel) => [
+			caption = "Eliminar"
+			onClick([|])
+		]	
+	}
+
+	
+	
+	override protected createFormPanel(Panel mainPanel) {
+		val horizontalPanel = new Panel(mainPanel)
+		horizontalPanel.layout = new HorizontalLayout()
+				
+		this.createResultsGrid(horizontalPanel)
+		
+		val verticalButtonPanel = new Panel(horizontalPanel)
+		verticalButtonPanel.layout = new VerticalLayout()
+		
+		this.addPanelActions(verticalButtonPanel)
+		
 		this.createGridActions(mainPanel)
-	}
-	
-	override protected addActions(Panel arg0) {
-		
-	}
-	
-	override protected createFormPanel(Panel arg0) {
-		
 	}
 	
 	def protected createResultsGrid(Panel mainPanel) {
@@ -59,28 +93,29 @@ class MenuWindow extends SimpleWindow<Menu> {
 			title = "Precio"
 			fixedSize = 100
 			alignRight
-			bindContentsToProperty("precio")
+			bindContentsToProperty("precioBase")
 		]
 	}
 	
 	def void createGridActions(Panel mainPanel) {
 		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
-		val elementSelected = new NotNullObservable("promoSeleccionada")
-		
-		val actionsPanel = new Panel(mainPanel).layout = new HorizontalLayout
-		
-		new Button(actionsPanel) => [
-			caption = "Editar"
-			//onClick([|this.modificarCelular])
-			bindEnabled(elementSelected)
-		]
-
-		new Button(actionsPanel) => [
-			caption = "Borrar"
-			//onClick([|modelObject.eliminarCelularSeleccionado])
-			bindEnabled(elementSelected)
-		]
+//		val elementSelected = new NotNullObservable("promoSeleccionada")
+//		
+//		val actionsPanel = new Panel(mainPanel).layout = new HorizontalLayout
+//		
+//		new Button(actionsPanel) => [
+//			caption = "Editar"
+//			//onClick([|this.modificarCelular])
+//			bindEnabled(elementSelected)
+//		]
+//
+//		new Button(actionsPanel) => [
+//			caption = "Borrar"
+//			//onClick([|modelObject.eliminarCelularSeleccionado])
+//			bindEnabled(elementSelected)
+//		]
 	}
+	
 	
 	
 }
