@@ -8,12 +8,12 @@ import ar.edu.unq.uis.runnable.DominoApplication
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.widgets.tables.Column
 import org.uqbar.arena.bindings.NotNullObservable
-
-
-import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.layout.VerticalLayout
+
+import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+
 
 class MenuWindow extends SimpleWindow<Menu> {
 	
@@ -34,6 +34,7 @@ class MenuWindow extends SimpleWindow<Menu> {
 		new Button(actionsPanel) => [
 			caption = "Cerrar"
 			onClick([|])
+			alignRight
 			
 		]
 	}

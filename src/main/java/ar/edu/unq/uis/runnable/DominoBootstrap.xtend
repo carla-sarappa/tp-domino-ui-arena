@@ -5,7 +5,7 @@ import ar.edu.unq.uis.domino.repo.RepoPizza
 import org.uqbar.commons.applicationContext.ApplicationContext
 import ar.edu.unq.uis.domino.Pizza
 
-class DominoBootstrap  extends CollectionBasedBootstrap {
+class DominoBootstrap extends CollectionBasedBootstrap {
 	
 	new() {
 		ApplicationContext.instance.configureSingleton(typeof(Pizza), new RepoPizza)
@@ -15,10 +15,10 @@ class DominoBootstrap  extends CollectionBasedBootstrap {
 		
 		repoPizza => [
 			createPromo("Capresse", 15.0)
-			createPromo("Palmitos",20.0)
+			createPromo("Palmitos", 20.0)
 			createPromo("Jamon y queso", 25.0)
 			createPromo("Jamon y morrones", 30.0)
-			createPromo("Anana",35.0)
+			createPromo("Anana", 35.0)
 			createPromo("Calabresa", 40.0)
 		]
 		
