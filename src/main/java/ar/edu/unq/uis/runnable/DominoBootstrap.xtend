@@ -3,7 +3,7 @@ package ar.edu.unq.uis.runnable
 import org.uqbar.arena.bootstrap.CollectionBasedBootstrap
 import ar.edu.unq.uis.domino.repo.RepoPizza
 import org.uqbar.commons.applicationContext.ApplicationContext
-import ar.edu.unq.uis.domino.Pizza
+import ar.edu.unq.uis.domino.model.Pizza
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	

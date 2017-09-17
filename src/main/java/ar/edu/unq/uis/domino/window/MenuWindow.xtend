@@ -1,7 +1,6 @@
-package ar.edu.unq.uis.domino
+package ar.edu.unq.uis.domino.window
 
 import org.uqbar.arena.windows.SimpleWindow
-import ar.edu.unq.uis.domino.Menu
 import org.uqbar.arena.widgets.Panel
 import org.uqbar.arena.windows.WindowOwner
 import ar.edu.unq.uis.runnable.DominoApplication
@@ -11,14 +10,16 @@ import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.layout.VerticalLayout
+import ar.edu.unq.uis.domino.viewmodel.MenuViewModel
+import ar.edu.unq.uis.domino.model.Pizza
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 
 
-class MenuWindow extends SimpleWindow<Menu> {
+class MenuWindow extends SimpleWindow<MenuViewModel> {
 	
 	new(DominoApplication application) {
-		super(application, new Menu)
+		super(application, new MenuViewModel)
 	}
 	
 	override def createMainTemplate(Panel mainPanel) {

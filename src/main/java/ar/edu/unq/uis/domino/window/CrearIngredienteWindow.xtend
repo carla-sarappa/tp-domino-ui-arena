@@ -1,4 +1,4 @@
-package ar.edu.unq.uis.domino
+package ar.edu.unq.uis.domino.window
 
 import org.uqbar.arena.windows.Dialog
 import ar.edu.unq.uis.domino.viewmodel.CrearIngredienteViewModel
