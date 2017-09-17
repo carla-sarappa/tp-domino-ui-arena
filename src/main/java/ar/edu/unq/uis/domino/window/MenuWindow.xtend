@@ -14,7 +14,7 @@ import ar.edu.unq.uis.domino.viewmodel.MenuViewModel
 import ar.edu.unq.uis.domino.model.Pizza
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-
+import org.uqbar.arena.widgets.Label
 
 class MenuWindow extends SimpleWindow<MenuViewModel> {
 	
@@ -48,22 +48,23 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 		
 		new Button(actionsPanel) => [
 			caption = "Editar"
-			onClick([|])
-			
+			onClick([|])	
 		]
 
 		new Button(actionsPanel) => [
 			caption = "Eliminar"
-			onClick([|])
+			onClick([| modelObject.eliminarSeleccionado])
 		]	
 	}
 
 	
 	
 	override protected createFormPanel(Panel mainPanel) {
+		new Label(mainPanel).text = "Promos"
+		
 		val horizontalPanel = new Panel(mainPanel)
-		horizontalPanel.layout = new HorizontalLayout()
-				
+		horizontalPanel.layout = new HorizontalLayout()		
+			
 		this.createResultsGrid(horizontalPanel)
 		
 		val verticalButtonPanel = new Panel(horizontalPanel)
@@ -77,7 +78,7 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 	def protected createResultsGrid(Panel mainPanel) {
 		val table = new Table<Pizza>(mainPanel, typeof(Pizza)) => [
 			items <=> "promos"
-			//value <=> "promoSeleccionada"
+			value <=> "promoSeleccionada"
 			numberVisibleRows = 8
 		]
 		this.describeResultsGrid(table)
@@ -85,6 +86,7 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 
 
 	def void describeResultsGrid(Table<Pizza> table) {
+	
 		new Column<Pizza>(table) => [
 			title = "Nombre"
 			fixedSize = 200
