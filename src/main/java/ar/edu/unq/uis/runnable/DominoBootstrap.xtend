@@ -6,13 +6,17 @@ import org.uqbar.commons.applicationContext.ApplicationContext
 import ar.edu.unq.uis.domino.model.Pizza
 import ar.edu.unq.uis.domino.model.Ingrediente
 import ar.edu.unq.uis.domino.repo.RepoIngredientes
+import ar.edu.unq.uis.domino.model.Distribucion
+import ar.edu.unq.uis.domino.repo.RepoDistribucion
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
 	new() {
 		ApplicationContext.instance.configureSingleton(typeof(Pizza), new RepoPizza)
 		ApplicationContext.instance.configureSingleton(typeof(Ingrediente), new RepoIngredientes)
+		ApplicationContext.instance.configureSingleton(typeof(Distribucion), new RepoDistribucion)
 	}
+	
 	override run() {
 		val repoPizza = ApplicationContext.instance.getSingleton(typeof(Pizza)) as RepoPizza
 		
@@ -36,6 +40,13 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 			createIngrediente("Salame rodajas")
 		]
 		
+		val repoDistribucion = ApplicationContext.instance.getSingleton(typeof(Distribucion)) as RepoDistribucion
+		
+		repoDistribucion => [
+			createDistribucion("Toda la pizza")
+			createDistribucion("Mitad izquierda")
+			createDistribucion("Mitad derecha")
+		]
 	}
 	
 }

@@ -7,6 +7,10 @@ import ar.edu.unq.uis.domino.repo.RepoIngredientes
 import ar.edu.unq.uis.domino.model.Ingrediente
 import ar.edu.unq.uis.domino.model.Pizza
 import org.eclipse.xtend.lib.annotations.Accessors
+import ar.edu.unq.uis.domino.model.Distribucion
+import ar.edu.unq.uis.domino.repo.RepoDistribucion
+import ar.edu.unq.uis.domino.model.IngredienteDistribuido
+import org.uqbar.commons.model.annotations.Dependencies
 
 @Accessors
 @TransactionalAndObservable
@@ -14,6 +18,7 @@ class PizzaViewModel {
 	
 	Pizza pizza = new Pizza()
 	Ingrediente ingredienteSeleccionado
+	Distribucion distribucionSeleccionada
 	
 	
 	def getIngredientes(){
@@ -35,6 +40,25 @@ class PizzaViewModel {
 	
 	def refresh(){
 		ObservableUtils.firePropertyChanged(this, "ingredientes", getIngredientes)
+	}
+	
+	def RepoDistribucion getRepoDistribuciones(){
+		ApplicationContext.instance.getSingleton(typeof(Distribucion)) as RepoDistribucion
+	}
+	
+	def getDistribuciones(){
+		getRepoDistribuciones().allInstances
+	}
+	
+	def agregarIngrediente() {
+		val nuevo = new IngredienteDistribuido(ingredienteSeleccionado, distribucionSeleccionada)
+		pizza.agregarIngrediente(nuevo)
+		ObservableUtils.firePropertyChanged(pizza, "ingredientes", pizza.ingredientes)		
+	}
+	
+	@Dependencies("ingredienteSeleccionado", "distribucionSeleccionada")
+	def isPuedeAgregarIngrediente(){
+		ingredienteSeleccionado != null && distribucionSeleccionada != null
 	}
 	
 	
