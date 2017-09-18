@@ -12,9 +12,9 @@ import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.layout.VerticalLayout
 import ar.edu.unq.uis.domino.viewmodel.MenuViewModel
 import ar.edu.unq.uis.domino.model.Pizza
-
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.arena.widgets.Label
+import org.uqbar.arena.windows.Dialog
 
 class MenuWindow extends SimpleWindow<MenuViewModel> {
 	
@@ -43,7 +43,7 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 	def addPanelActions(Panel actionsPanel) {
 		new Button(actionsPanel) => [
 			caption = "Crear"
-			onClick([|])
+			onClick([|this.crearElemento])
 		]
 		
 		new Button(actionsPanel) => [
@@ -120,6 +120,14 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 //		]
 	}
 	
+	def void crearElemento() {
+		this.openDialog(new CrearElementoWindow(this))
+	}
+	
+	def openDialog(Dialog<?> dialog) {
+		dialog.onAccept[|modelObject.refresh]
+		dialog.open
+	}
 	
 	
 }
