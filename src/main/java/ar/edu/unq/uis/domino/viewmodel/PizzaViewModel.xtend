@@ -11,6 +11,7 @@ import ar.edu.unq.uis.domino.model.Distribucion
 import ar.edu.unq.uis.domino.repo.RepoDistribucion
 import ar.edu.unq.uis.domino.model.IngredienteDistribuido
 import org.uqbar.commons.model.annotations.Dependencies
+import ar.edu.unq.uis.domino.repo.Repositories
 
 @Accessors
 @TransactionalAndObservable
@@ -22,32 +23,24 @@ class PizzaViewModel {
 	
 	
 	def getIngredientes(){
-		getRepoIngredientes.allInstances
+		Repositories.getIngredientes().allInstances
 	}
 	
 	def eliminarSeleccionado() {
 		if (ingredienteSeleccionado == null){
 			return
 		}
-		getRepoIngredientes().delete(ingredienteSeleccionado)
+		Repositories.getIngredientes().delete(ingredienteSeleccionado)
 		ingredienteSeleccionado = null
 		refresh
-	}
-
-	def RepoIngredientes getRepoIngredientes() {
-		ApplicationContext.instance.getSingleton(typeof(Ingrediente)) as RepoIngredientes
 	}
 	
 	def refresh(){
 		ObservableUtils.firePropertyChanged(this, "ingredientes", getIngredientes)
 	}
 	
-	def RepoDistribucion getRepoDistribuciones(){
-		ApplicationContext.instance.getSingleton(typeof(Distribucion)) as RepoDistribucion
-	}
-	
 	def getDistribuciones(){
-		getRepoDistribuciones().allInstances
+		Repositories.getDistribuciones.allInstances
 	}
 	
 	def agregarIngrediente() {
@@ -61,5 +54,12 @@ class PizzaViewModel {
 		ingredienteSeleccionado != null && distribucionSeleccionada != null
 	}
 	
+	def guardar(){
+		if (pizza.isNew) {
+			Repositories.getPizzas.create(pizza)
+		} else {
+			Repositories.getPizzas.update(pizza)	
+		}	
+	}
 	
 }

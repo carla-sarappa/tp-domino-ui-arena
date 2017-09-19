@@ -20,6 +20,7 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 	
 	new(DominoApplication application) {
 		super(application, new MenuViewModel)
+		modelObject.refresh
 	}
 	
 	override def createMainTemplate(Panel mainPanel) {
@@ -44,11 +45,12 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 		new Button(actionsPanel) => [
 			caption = "Crear"
 			onClick([|this.crearElemento])
+			
 		]
 		
 		new Button(actionsPanel) => [
 			caption = "Editar"
-			onClick([|])	
+			onClick([| this.editarElemento])	
 		]
 
 		new Button(actionsPanel) => [
@@ -57,8 +59,6 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 		]	
 	}
 
-	
-	
 	override protected createFormPanel(Panel mainPanel) {
 		new Label(mainPanel).text = "Promos"
 		
@@ -71,61 +71,41 @@ class MenuWindow extends SimpleWindow<MenuViewModel> {
 		verticalButtonPanel.layout = new VerticalLayout()
 		
 		this.addPanelActions(verticalButtonPanel)
-		
-		this.createGridActions(mainPanel)
 	}
 	
 	def protected createResultsGrid(Panel mainPanel) {
 		val table = new Table<Pizza>(mainPanel, typeof(Pizza)) => [
 			items <=> "promos"
 			value <=> "promoSeleccionada"
-			numberVisibleRows = 8
+			numberVisibleRows = 12
 		]
-		this.describeResultsGrid(table)
-	}
-
-
-	def void describeResultsGrid(Table<Pizza> table) {
-	
+		
 		new Column<Pizza>(table) => [
 			title = "Nombre"
-			fixedSize = 200
+			fixedSize = 300
 			bindContentsToProperty("nombre")
 		]
 
 		new Column<Pizza>(table) => [
 			title = "Precio"
-			fixedSize = 100
+			fixedSize = 200
 			alignRight
 			bindContentsToProperty("precioBase")
 		]
-	}
-	
-	def void createGridActions(Panel mainPanel) {
-		// Deshabilitar los botones si no hay ningún elemento seleccionado en la grilla.
-//		val elementSelected = new NotNullObservable("promoSeleccionada")
-//		
-//		val actionsPanel = new Panel(mainPanel).layout = new HorizontalLayout
-//		
-//		new Button(actionsPanel) => [
-//			caption = "Editar"
-//			//onClick([|this.modificarCelular])
-//			bindEnabled(elementSelected)
-//		]
-//
-//		new Button(actionsPanel) => [
-//			caption = "Borrar"
-//			//onClick([|modelObject.eliminarCelularSeleccionado])
-//			bindEnabled(elementSelected)
-//		]
 	}
 	
 	def void crearElemento() {
 		this.openDialog(new CrearElementoWindow(this))
 	}
 	
+	def void editarElemento() {
+		this.openDialog(new EditarElementoWindow(this, modelObject.promoSeleccionada))
+	}
+	
 	def openDialog(Dialog<?> dialog) {
-		dialog.onAccept[|modelObject.refresh]
+		dialog.onAccept[|
+			modelObject.refresh
+		]
 		dialog.open
 	}
 	
