@@ -12,8 +12,10 @@ import ar.edu.unq.uis.domino.model.Pedido
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.arena.widgets.tables.Column
 import ar.edu.unq.uis.domino.model.Estado
+import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.windows.Dialog
 
-class PedidosAbiertosWindow extends SimpleWindow<PedidosAbiertosViewModel> {
+class PedidosAbiertosWindow extends Dialog<PedidosAbiertosViewModel> {
 	
 	new(DominoApplication application) {
 		super(application, new PedidosAbiertosViewModel)
@@ -28,12 +30,10 @@ class PedidosAbiertosWindow extends SimpleWindow<PedidosAbiertosViewModel> {
 		super.createMainTemplate(mainPanel)
 	}
 	
-	override protected addActions(Panel actionsPanel) {
-		throw new UnsupportedOperationException("TODO: auto-generated method stub")
-	}
-	
 	override protected createFormPanel(Panel mainPanel) {
-		new Label(mainPanel).text = "Pedidos abiertos"
+		val texto = new Label(mainPanel)
+		texto.text = "Pedidos abiertos"
+		texto.alignLeft
 		
 		val horizontalPanel = new Panel(mainPanel)
 		horizontalPanel.layout = new HorizontalLayout()		
@@ -43,14 +43,43 @@ class PedidosAbiertosWindow extends SimpleWindow<PedidosAbiertosViewModel> {
 		val verticalButtonPanel = new Panel(horizontalPanel)
 		verticalButtonPanel.layout = new VerticalLayout()
 		
-	//	this.addPanelActions(verticalButtonPanel)
+		this.addPanelActions(verticalButtonPanel)
+	}
+	
+	def addPanelActions(Panel panel) {
+		addPaginado(panel)
+		
+		new Button(panel) => [
+			caption = "Cancelar"
+			onClick([|])
+			
+		]
+		new Button(panel) => [
+			caption = "Editar"
+			onClick([|])
+		]
+	}
+	
+	def addPaginado(Panel panel){
+		val navegacionPanel = new Panel(panel)
+		navegacionPanel.layout = new HorizontalLayout()	
+		
+		new Button(navegacionPanel) => [
+			caption = "<<<"
+			onClick([|])
+			
+		]
+		new Button(navegacionPanel) => [
+			caption = ">>>"
+			onClick([|])
+		]
 	}
 	
 	def protected createResultsGrid(Panel mainPanel) {
 		val table = new Table<Pedido>(mainPanel, typeof(Pedido)) => [
-			items <=> "promos"
-			value <=> "promoSeleccionada"
-			numberVisibleRows = 3
+			items <=> "pedidos"
+			value <=> "pedidoSeleccionado"
+			numberVisibleRows = 4
 		]
 		
 		new Column<Pedido>(table) => [
@@ -62,23 +91,44 @@ class PedidosAbiertosWindow extends SimpleWindow<PedidosAbiertosViewModel> {
 		new Column<Pedido>(table) => [
 			title = "Estado"
 			fixedSize = 300
-			alignRight
 			bindContentsToProperty("estado")
 		]
 		
 		new Column<Pedido>(table) => [
 			title = "Monto"
 			fixedSize = 300
-			alignRight
 			bindContentsToProperty("monto")
 		]
 		
 		new Column<Pedido>(table) => [
 			title = "Hora"
 			fixedSize = 300
-			alignRight
 			bindContentsToProperty("fecha")
 		]
 	}
+	
+	override def addActions(Panel mainPanel){
+		new Button(mainPanel) => [
+			caption = "Menu"
+			onClick([|this.abrirMenu])
+			
+		]
+		new Button(mainPanel) => [
+			caption = "Pedidos cerrados"
+			onClick([|])
+		]
+		new Button(mainPanel) => [
+			caption = "Salir"
+			onClick([|])
+			
+		]
+	
+	}
+	
+	def void abrirMenu() {
+		val menu = new MenuWindow(this)
+		menu.open
+	}
+	
 	
 }

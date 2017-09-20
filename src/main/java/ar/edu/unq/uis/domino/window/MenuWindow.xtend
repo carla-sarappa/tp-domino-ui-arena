@@ -13,12 +13,17 @@ import ar.edu.unq.uis.domino.model.Pizza
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.windows.Dialog
+import org.uqbar.arena.windows.WindowOwner
 
 class MenuWindow extends SimpleWindow<MenuViewModel> {
 	
-	new(DominoApplication application) {
-		super(application, new MenuViewModel)
-		modelObject.refresh
+//	new(DominoApplication application) {
+//		super(application, new MenuViewModel)
+//		modelObject.refresh
+//	}
+	
+	new(WindowOwner parent) {
+		super(parent, new MenuViewModel)
 	}
 	
 	override def createMainTemplate(Panel mainPanel) {
