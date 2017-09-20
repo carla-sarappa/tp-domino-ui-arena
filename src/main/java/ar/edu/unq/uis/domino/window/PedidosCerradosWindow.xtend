@@ -14,12 +14,13 @@ import org.uqbar.arena.widgets.tables.Column
 import ar.edu.unq.uis.domino.model.Estado
 import ar.edu.unq.uis.domino.viewmodel.PedidosCerradosViewModel
 import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.windows.WindowOwner
 
 class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosViewModel> {
 	
-	new(DominoApplication application) {
-		super(application, new PedidosCerradosViewModel)
-	//	modelObject.refresh
+		
+	new(WindowOwner parent) {
+		super(parent, new PedidosCerradosViewModel)
 	}
 	
 	override def createMainTemplate(Panel mainPanel) {
@@ -48,7 +49,7 @@ class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosViewModel> {
 	
 	override protected createFormPanel(Panel mainPanel) {
 		new Label(mainPanel).text = "Pedidos cerrados"
-		
+				
 		val horizontalPanel = new Panel(mainPanel)
 		horizontalPanel.layout = new HorizontalLayout()		
 			
@@ -58,8 +59,8 @@ class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosViewModel> {
 	
 	def protected createResultsGrid(Panel mainPanel) {
 		val table = new Table<Pedido>(mainPanel, typeof(Pedido)) => [
-			items <=> "pedidosCerrados"
-			value <=> "pedidoCerradoSeleccionado"
+			items <=> "pedidos"
+			value <=> "pedidoSeleccionado"
 			numberVisibleRows = 3
 		]
 		

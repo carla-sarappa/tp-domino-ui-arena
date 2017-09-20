@@ -23,17 +23,13 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosViewModel> {
 	}
 	
 	override def createMainTemplate(Panel mainPanel) {
-		title = "Domino Pizza - Menu"
-		taskDescription = "Elegi tu promo"
-
-		
+		title = "Pedidos abiertos"
+	
 		super.createMainTemplate(mainPanel)
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
-		val texto = new Label(mainPanel)
-		texto.text = "Pedidos abiertos"
-		texto.alignLeft
+		new Label(mainPanel).text = "Pedidos abiertos"
 		
 		val horizontalPanel = new Panel(mainPanel)
 		horizontalPanel.layout = new HorizontalLayout()		
@@ -115,7 +111,7 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosViewModel> {
 		]
 		new Button(mainPanel) => [
 			caption = "Pedidos cerrados"
-			onClick([|])
+			onClick([|this.abrirPedidosCerrados])
 		]
 		new Button(mainPanel) => [
 			caption = "Salir"
@@ -128,6 +124,11 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosViewModel> {
 	def void abrirMenu() {
 		val menu = new MenuWindow(this)
 		menu.open
+	}
+	
+	def void abrirPedidosCerrados(){
+		val cerrados = new PedidosCerradosWindow(this)
+		cerrados.open
 	}
 	
 	

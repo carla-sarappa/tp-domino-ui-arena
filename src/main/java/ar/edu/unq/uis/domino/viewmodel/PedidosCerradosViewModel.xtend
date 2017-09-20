@@ -3,7 +3,11 @@ package ar.edu.unq.uis.domino.viewmodel
 import ar.edu.unq.uis.domino.repo.Repositories
 import ar.edu.unq.uis.domino.model.Pedido
 import org.uqbar.commons.model.utils.ObservableUtils
+import org.uqbar.commons.model.annotations.TransactionalAndObservable
+import org.eclipse.xtend.lib.annotations.Accessors
 
+@TransactionalAndObservable
+@Accessors
 class PedidosCerradosViewModel {
 	Pedido pedidoSeleccionado
 	
