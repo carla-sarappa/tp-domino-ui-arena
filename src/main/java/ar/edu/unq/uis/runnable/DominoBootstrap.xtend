@@ -41,12 +41,12 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		val repoIngredientes = ApplicationContext.instance.getSingleton(typeof(Ingrediente)) as RepoIngredientes
 		
 		repoIngredientes => [
-			createIngrediente("Tomate seco")
-			createIngrediente("Extra queso")
-			createIngrediente("Jamon crudo")
-			createIngrediente("Provolone rallado")
-			createIngrediente("Anchoas sueltas")
-			createIngrediente("Salame rodajas")
+			createIngrediente("Tomate seco", 1.0)
+			createIngrediente("Extra queso", 1.0)
+			createIngrediente("Jamon crudo", 1.0)
+			createIngrediente("Provolone rallado", 1.0)
+			createIngrediente("Anchoas sueltas", 1.0)
+			createIngrediente("Salame rodajas", 1.0)
 		]
 		
 		val repoDistribucion = ApplicationContext.instance.getSingleton(typeof(Distribucion)) as RepoDistribucion

@@ -6,7 +6,7 @@ import ar.edu.unq.uis.domino.model.Pizza
 
 class CrearElementoWindow extends EditarElementoWindow {
 		
-	new(MenuWindow window) {
+	new(WindowOwner window) {
 		super(window, new Pizza)
 	}
 	

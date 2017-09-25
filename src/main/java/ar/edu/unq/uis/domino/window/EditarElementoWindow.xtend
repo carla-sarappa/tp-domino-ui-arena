@@ -54,7 +54,7 @@ class EditarElementoWindow extends TransactionalDialog<PizzaAppModel>{
 		new Label(form).text = "Precio"
 			
 		new NumericField(form) => [
-			value <=> "pizza.precioBase"
+			value <=> "pizza.precio"
 			width = 100
 		]	
 		crearPanelListas(mainPanel)

@@ -9,22 +9,12 @@ import ar.edu.unq.uis.domino.repo.Repositories
 @Accessors
 @TransactionalAndObservable
 class MenuAppModel {
-	Pizza promoSeleccionada
+	PizzaTablaEditableAppModel pizzaTablaEditableAppModel = new PizzaTablaEditableAppModel()
+	IngredienteTablaEditableAppModel ingredienteTablaEditableAppModel = new IngredienteTablaEditableAppModel()
 	
-	def getPromos(){
-		Repositories.getPizzas.allInstances
-	}
-	
-	def eliminarSeleccionado() {
-		if (promoSeleccionada == null){
-			return
-		}
-		Repositories.getPizzas.delete(promoSeleccionada)
-		promoSeleccionada = null
-		refresh
-	}
-	
+
 	def refresh(){
-		ObservableUtils.firePropertyChanged(this, "promos", getPromos)
+		pizzaTablaEditableAppModel.refresh
+		ingredienteTablaEditableAppModel.refresh
 	}
 }

@@ -17,11 +17,6 @@ import org.uqbar.arena.windows.WindowOwner
 
 class MenuWindow extends SimpleWindow<MenuAppModel> {
 	
-//	new(DominoApplication application) {
-//		super(application, new MenuViewModel)
-//		modelObject.refresh
-//	}
-	
 	new(WindowOwner parent) {
 		super(parent, new MenuAppModel)
 	}
@@ -31,7 +26,7 @@ class MenuWindow extends SimpleWindow<MenuAppModel> {
 		taskDescription = "Elegi tu promo"
 		
 		super.createMainTemplate(mainPanel)
-		val promosTabla = new TablaEditableWindow(mainPanel, this)
+
 	}
 	
 	override protected addActions(Panel actionsPanel) {
@@ -44,72 +39,16 @@ class MenuWindow extends SimpleWindow<MenuAppModel> {
 		]
 	}
 	
-	def addPanelActions(Panel actionsPanel) {
-		new Button(actionsPanel) => [
-			caption = "Crear"
-			onClick([|this.crearElemento])
-		]
-		
-		new Button(actionsPanel) => [
-			caption = "Editar"
-			onClick([| this.editarElemento])	
-		]
-
-		new Button(actionsPanel) => [
-			caption = "Eliminar"
-			onClick([| modelObject.eliminarSeleccionado])
-		]	
-	}
-
 	override protected createFormPanel(Panel mainPanel) {
-		new Label(mainPanel).text = "Promos"
 		
-		val horizontalPanel = new Panel(mainPanel)
-		horizontalPanel.layout = new HorizontalLayout()		
-			
-		this.createResultsGrid(horizontalPanel)
-		
-		val verticalButtonPanel = new Panel(horizontalPanel)
-		verticalButtonPanel.layout = new VerticalLayout()
-		
-		this.addPanelActions(verticalButtonPanel)
-	}
-	
-	def protected createResultsGrid(Panel mainPanel) {
-		val table = new Table<Pizza>(mainPanel, typeof(Pizza)) => [
-			items <=> "promos"
-			value <=> "promoSeleccionada"
-			numberVisibleRows = 3
+		new PizzaTablaEditable(mainPanel, modelObject.pizzaTablaEditableAppModel, this) => [
+			nombreTabla = "Promos"
 		]
-		
-		new Column<Pizza>(table) => [
-			title = "Nombre"
-			fixedSize = 300
-			bindContentsToProperty("nombre")
+		 
+		new IngredienteTablaEditable(mainPanel, modelObject.ingredienteTablaEditableAppModel, this) => [
+			nombreTabla = "Ingredientes disponibles"
 		]
 
-		new Column<Pizza>(table) => [
-			title = "Precio"
-			fixedSize = 200
-			alignRight
-			bindContentsToProperty("precioBase")
-		]
 	}
-	
-	def void crearElemento() {
-		this.openDialog(new CrearElementoWindow(this))
-	}
-	
-	def void editarElemento() {
-		this.openDialog(new EditarElementoWindow(this, modelObject.promoSeleccionada))
-	}
-	
-	def openDialog(Dialog<?> dialog) {
-		dialog.onAccept[|
-			modelObject.refresh
-		]
-		dialog.open
-	}
-	
 	
 }
