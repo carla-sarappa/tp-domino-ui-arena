@@ -1,6 +1,6 @@
 package ar.edu.unq.uis.domino.window
 
-import ar.edu.unq.uis.domino.viewmodel.PedidosAbiertosViewModel
+import ar.edu.unq.uis.domino.appmodel.PedidosAbiertosAppModel
 import org.uqbar.arena.windows.SimpleWindow
 import ar.edu.unq.uis.runnable.DominoApplication
 import org.uqbar.arena.widgets.Panel
@@ -12,15 +12,15 @@ import ar.edu.unq.uis.domino.model.Pedido
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
 import org.uqbar.arena.widgets.tables.Column
 import ar.edu.unq.uis.domino.model.Estado
-import ar.edu.unq.uis.domino.viewmodel.PedidosCerradosViewModel
+import ar.edu.unq.uis.domino.appmodel.PedidosCerradosAppModel
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.WindowOwner
 
-class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosViewModel> {
+class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosAppModel> {
 	
 		
 	new(WindowOwner parent) {
-		super(parent, new PedidosCerradosViewModel)
+		super(parent, new PedidosCerradosAppModel)
 	}
 	
 	override def createMainTemplate(Panel mainPanel) {

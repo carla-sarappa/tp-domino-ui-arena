@@ -1,8 +1,6 @@
-package ar.edu.unq.uis.domino.viewmodel
+package ar.edu.unq.uis.domino.appmodel
 
 import org.eclipse.xtend.lib.annotations.Accessors
-import org.uqbar.commons.applicationContext.ApplicationContext
-import ar.edu.unq.uis.domino.repo.RepoPizza
 import ar.edu.unq.uis.domino.model.Pizza
 import org.uqbar.commons.model.annotations.TransactionalAndObservable
 import org.uqbar.commons.model.utils.ObservableUtils
@@ -10,7 +8,7 @@ import ar.edu.unq.uis.domino.repo.Repositories
 
 @Accessors
 @TransactionalAndObservable
-class MenuViewModel {
+class MenuAppModel {
 	Pizza promoSeleccionada
 	
 	def getPromos(){

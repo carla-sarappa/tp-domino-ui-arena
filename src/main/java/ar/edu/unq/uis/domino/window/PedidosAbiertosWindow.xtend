@@ -1,6 +1,6 @@
 package ar.edu.unq.uis.domino.window
 
-import ar.edu.unq.uis.domino.viewmodel.PedidosAbiertosViewModel
+import ar.edu.unq.uis.domino.appmodel.PedidosAbiertosAppModel
 import org.uqbar.arena.windows.SimpleWindow
 import ar.edu.unq.uis.runnable.DominoApplication
 import org.uqbar.arena.widgets.Panel
@@ -15,10 +15,10 @@ import ar.edu.unq.uis.domino.model.Estado
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
 
-class PedidosAbiertosWindow extends Dialog<PedidosAbiertosViewModel> {
+class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 	
 	new(DominoApplication application) {
-		super(application, new PedidosAbiertosViewModel)
+		super(application, new PedidosAbiertosAppModel)
 	//	modelObject.refresh
 	}
 	

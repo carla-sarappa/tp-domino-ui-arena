@@ -9,7 +9,7 @@ import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.layout.ColumnLayout
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import ar.edu.unq.uis.domino.viewmodel.PizzaViewModel
+import ar.edu.unq.uis.domino.appmodel.PizzaAppModel
 import org.uqbar.arena.widgets.List
 import org.uqbar.arena.layout.HorizontalLayout
 import org.uqbar.arena.widgets.Selector
@@ -25,7 +25,7 @@ import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import ar.edu.unq.uis.domino.model.Pizza
 
-class EditarElementoWindow extends TransactionalDialog<PizzaViewModel>{
+class EditarElementoWindow extends TransactionalDialog<PizzaAppModel>{
 	
 	new(WindowOwner owner, Pizza pizza) {
 		super(owner, createViewModel(pizza))
@@ -33,7 +33,7 @@ class EditarElementoWindow extends TransactionalDialog<PizzaViewModel>{
 	}
 	
 	static def createViewModel(Pizza pizza){
-		val model = new PizzaViewModel()
+		val model = new PizzaAppModel()
 		model.pizza = pizza
 		return model
 	}

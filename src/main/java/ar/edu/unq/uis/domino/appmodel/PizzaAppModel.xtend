@@ -1,4 +1,4 @@
-package ar.edu.unq.uis.domino.viewmodel
+package ar.edu.unq.uis.domino.appmodel
 
 import org.uqbar.commons.model.annotations.TransactionalAndObservable
 import org.uqbar.commons.applicationContext.ApplicationContext
@@ -15,7 +15,7 @@ import ar.edu.unq.uis.domino.repo.Repositories
 
 @Accessors
 @TransactionalAndObservable
-class PizzaViewModel {
+class PizzaAppModel {
 	
 	Pizza pizza = new Pizza()
 	Ingrediente ingredienteSeleccionado

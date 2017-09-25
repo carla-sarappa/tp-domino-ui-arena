@@ -1,14 +1,15 @@
-package ar.edu.unq.uis.domino.viewmodel
+package ar.edu.unq.uis.domino.appmodel
 
-import ar.edu.unq.uis.domino.repo.Repositories
-import ar.edu.unq.uis.domino.model.Pedido
-import org.uqbar.commons.model.utils.ObservableUtils
-import org.uqbar.commons.model.annotations.TransactionalAndObservable
+import org.uqbar.commons.model.annotations.Observable
 import org.eclipse.xtend.lib.annotations.Accessors
+import ar.edu.unq.uis.domino.repo.Repositories
+import org.uqbar.commons.model.utils.ObservableUtils
+import ar.edu.unq.uis.domino.model.Pedido
 
-@TransactionalAndObservable
 @Accessors
-class PedidosCerradosViewModel {
+@Observable
+class PedidosAbiertosAppModel {
+	
 	Pedido pedidoSeleccionado
 	
 	def getPedidos(){
@@ -27,4 +28,5 @@ class PedidosCerradosViewModel {
 	def refresh(){
 		ObservableUtils.firePropertyChanged(this, "pedidos", getPedidos)
 	}
+	
 }

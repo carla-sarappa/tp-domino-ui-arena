@@ -1,49 +1,30 @@
 package ar.edu.unq.uis.domino.window
 
-import org.uqbar.arena.windows.SimpleWindow
+import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.widgets.Panel
-import ar.edu.unq.uis.runnable.DominoApplication
+import org.uqbar.arena.widgets.Container
+import org.uqbar.arena.widgets.Label
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.widgets.tables.Column
-import org.uqbar.arena.layout.HorizontalLayout
-import org.uqbar.arena.widgets.Button
-import org.uqbar.arena.layout.VerticalLayout
-import ar.edu.unq.uis.domino.appmodel.MenuAppModel
-import ar.edu.unq.uis.domino.model.Pizza
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
-import org.uqbar.arena.widgets.Label
+import org.uqbar.arena.layout.VerticalLayout
+import org.uqbar.arena.layout.HorizontalLayout
+import ar.edu.unq.uis.domino.model.Pizza
 import org.uqbar.arena.windows.Dialog
-import org.uqbar.arena.windows.WindowOwner
+import ar.edu.unq.uis.domino.appmodel.MenuAppModel
 
-class MenuWindow extends SimpleWindow<MenuAppModel> {
+class TablaEditableWindow extends Panel {
 	
-//	new(DominoApplication application) {
-//		super(application, new MenuViewModel)
-//		modelObject.refresh
-//	}
+	MenuWindow menuWindow
 	
-	new(WindowOwner parent) {
-		super(parent, new MenuAppModel)
-	}
-	
-	override def createMainTemplate(Panel mainPanel) {
-		title = "Domino Pizza - Menu"
-		taskDescription = "Elegi tu promo"
+	new(Container container, MenuWindow menuWindow) {
+		super(container)
+		this.menuWindow = menuWindow
 		
-		super.createMainTemplate(mainPanel)
-		val promosTabla = new TablaEditableWindow(mainPanel, this)
+		this.layout = new VerticalLayout()
+		createFormPanel(this)
 	}
-	
-	override protected addActions(Panel actionsPanel) {
-		
-		new Button(actionsPanel) => [
-			caption = "Cerrar"
-			onClick([|])
-			alignRight
-			
-		]
-	}
-	
+
 	def addPanelActions(Panel actionsPanel) {
 		new Button(actionsPanel) => [
 			caption = "Crear"
@@ -57,12 +38,12 @@ class MenuWindow extends SimpleWindow<MenuAppModel> {
 
 		new Button(actionsPanel) => [
 			caption = "Eliminar"
-			onClick([| modelObject.eliminarSeleccionado])
+			onClick([| menuWindow.modelObject.eliminarSeleccionado])
 		]	
 	}
 
-	override protected createFormPanel(Panel mainPanel) {
-		new Label(mainPanel).text = "Promos"
+	def createFormPanel(Panel mainPanel) {
+		new Label(mainPanel).text = "Promos tabla editable woohoooo"
 		
 		val horizontalPanel = new Panel(mainPanel)
 		horizontalPanel.layout = new HorizontalLayout()		
@@ -97,16 +78,16 @@ class MenuWindow extends SimpleWindow<MenuAppModel> {
 	}
 	
 	def void crearElemento() {
-		this.openDialog(new CrearElementoWindow(this))
+		this.openDialog(new CrearElementoWindow(menuWindow))
 	}
 	
 	def void editarElemento() {
-		this.openDialog(new EditarElementoWindow(this, modelObject.promoSeleccionada))
+		this.openDialog(new EditarElementoWindow(menuWindow, menuWindow.modelObject.promoSeleccionada))
 	}
 	
 	def openDialog(Dialog<?> dialog) {
 		dialog.onAccept[|
-			modelObject.refresh
+			menuWindow.modelObject.refresh
 		]
 		dialog.open
 	}
