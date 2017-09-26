@@ -23,9 +23,9 @@ abstract class ElementoAppModel<T extends Entity> {
 		}	
 	}
 	
-	def List<T> getElementos(){
-		getRepository().allInstances
-	}
+//	def List<T> getElementos(){
+//		getRepository().allInstances
+//	}
 	
 	abstract def CollectionBasedRepo<T> getRepository() 
 	

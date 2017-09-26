@@ -15,12 +15,14 @@ import ar.edu.unq.uis.domino.repo.Repositories
 
 @Accessors
 @TransactionalAndObservable
-class PizzaAppModel {
+class PizzaAppModel extends ElementoAppModel<Pizza>{
 	
-	Pizza pizza = new Pizza()
 	Ingrediente ingredienteSeleccionado
 	Distribucion distribucionSeleccionada
 	
+	new(){
+		this.elemento = new Pizza()	
+	}
 	
 	def getIngredientes(){
 		Repositories.getIngredientes().allInstances
@@ -45,8 +47,8 @@ class PizzaAppModel {
 	
 	def agregarIngrediente() {
 		val nuevo = new IngredienteDistribuido(ingredienteSeleccionado, distribucionSeleccionada)
-		pizza.agregarIngrediente(nuevo)
-		ObservableUtils.firePropertyChanged(pizza, "ingredientes", pizza.ingredientes)		
+		elemento.agregarIngrediente(nuevo)
+		ObservableUtils.firePropertyChanged(elemento, "ingredientes", elemento.ingredientes)		
 	}
 	
 	@Dependencies("ingredienteSeleccionado", "distribucionSeleccionada")
@@ -54,12 +56,9 @@ class PizzaAppModel {
 		ingredienteSeleccionado != null && distribucionSeleccionada != null
 	}
 	
-	def guardar(){
-		if (pizza.isNew) {
-			Repositories.getPizzas.create(pizza)
-		} else {
-			Repositories.getPizzas.update(pizza)	
-		}	
+	
+	override getRepository() {
+		Repositories.getPizzas()
 	}
 	
 }

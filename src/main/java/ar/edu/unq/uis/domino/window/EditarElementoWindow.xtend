@@ -24,105 +24,32 @@ import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import ar.edu.unq.uis.domino.model.Pizza
+import ar.edu.unq.uis.domino.appmodel.ElementoAppModel
 
-class EditarElementoWindow extends TransactionalDialog<PizzaAppModel>{
+abstract class EditarElementoWindow<T extends ElementoAppModel> extends TransactionalDialog<T>{
 	
-	new(WindowOwner owner, Pizza pizza) {
-		super(owner, createViewModel(pizza))
-		title = defaultTitle()
+	new(WindowOwner owner, T model) {
+		super(owner, model)
 	}
 	
-	static def createViewModel(Pizza pizza){
-		val model = new PizzaAppModel()
-		model.pizza = pizza
-		return model
-	}
-	
-	def defaultTitle() {
-		"Editar pizza"
-	}
+	abstract def String defaultTitle() 
 	
 	override protected createFormPanel(Panel mainPanel) {
 		val form = new Panel(mainPanel).layout = new ColumnLayout(2)
 		new Label(form).text = "Nombre"
 		
 		new TextBox(form) => [
-			value <=> "pizza.nombre"
+			value <=> "elemento.nombre"
 			width = 200	
 		]
 		
 		new Label(form).text = "Precio"
 			
 		new NumericField(form) => [
-			value <=> "pizza.precio"
+			value <=> "elemento.precio"
 			width = 100
 		]	
-		crearPanelListas(mainPanel)
-		crearTablaIngredientesAgregados(mainPanel)
-	}
-	
-	def crearPanelListas(Panel mainPanel){
-		val listas = new Panel(mainPanel).layout = new HorizontalLayout
 		
-		new Selector(listas) => [
-            value <=> "ingredienteSeleccionado"
-            
-            val bindingItems = items <=> "ingredientes"
-     		bindingItems.adapter = new PropertyAdapter(typeof(Ingrediente), "nombre")
-            width = 220
-            height = 220
-		]	
-		
-		new Selector(listas) => [
-            value <=> "distribucionSeleccionada"
-            val bindingItems = items <=> "distribuciones"
-     		bindingItems.adapter = new PropertyAdapter(typeof(Distribucion), "nombre")
-            width = 220
-            height = 220
-		]	
-		
-		new Button(listas) => [
-			caption = "Agregar ingrediente a la pizza"
-			onClick([|modelObject.agregarIngrediente])
-			//visible <=> "puedeAgregarIngrediente"
-			bindVisible(new NotNullObservable("ingredienteSeleccionado"))
-			//bindVisible(new NotNullObservable("distribucionSeleccionada"))
-			disableOnError
-		]
-	}
-	
-	
-	
-	def protected crearTablaIngredientesAgregados(Panel mainPanel) {
-		val table = new Table<IngredienteDistribuido>(mainPanel, typeof(IngredienteDistribuido)) => [
-			items <=> "pizza.ingredientes"
-			//value <=> "seleccionado"
-			numberVisibleRows = 8
-		]
-		this.describeResultsGrid(table)
-	}
-
-
-	def void describeResultsGrid(Table<IngredienteDistribuido> table) {
-	
-		new Column<IngredienteDistribuido>(table) => [
-			title = "Ingrediente"
-			fixedSize = 200
-			bindContentsToProperty("ingrediente.nombre")
-		]
-
-		new Column<IngredienteDistribuido>(table) => [
-			title = "Distribucion"
-			fixedSize = 300
-			alignRight
-			bindContentsToProperty("distribucion.nombre")
-		]
-	}
-	
-	
-	override def createMainTemplate(Panel mainPanel) {
-		title = "Pizza"
-		super.createMainTemplate(mainPanel)
 	}
 	
 	override def addActions(Panel actions){
@@ -147,4 +74,5 @@ class EditarElementoWindow extends TransactionalDialog<PizzaAppModel>{
 		modelObject.guardar
 		super.executeTask()
 	}
+	
 }

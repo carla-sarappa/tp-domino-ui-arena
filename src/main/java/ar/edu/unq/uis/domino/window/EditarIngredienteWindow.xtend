@@ -26,7 +26,7 @@ import org.uqbar.arena.aop.windows.TransactionalDialog
 import ar.edu.unq.uis.domino.model.Pizza
 import ar.edu.unq.uis.domino.appmodel.IngredienteAppModel
 
-class EditarIngredienteWindow extends TransactionalDialog<IngredienteAppModel>{
+class EditarIngredienteWindow extends EditarElementoWindow<IngredienteAppModel>{
 	
 	new(WindowOwner owner, IngredienteAppModel model) {
 		super(owner, model)
@@ -41,54 +41,13 @@ class EditarIngredienteWindow extends TransactionalDialog<IngredienteAppModel>{
 		return new IngredienteAppModel(ingrediente)
 	}
 	
-	def defaultTitle() {
+	override defaultTitle() {
 		"Editar ingrediente"
 	}
-	
-	override protected createFormPanel(Panel mainPanel) {
-		val form = new Panel(mainPanel).layout = new ColumnLayout(2)
-		new Label(form).text = "Nombre"
-		
-		new TextBox(form) => [
-			value <=> "elemento.nombre"
-			width = 200	
-		]
-		
-		new Label(form).text = "Precio"
-			
-		new NumericField(form) => [
-			value <=> "elemento.precio"
-			width = 100
-		]	
-
-	}
-	
 	
 	override def createMainTemplate(Panel mainPanel) {
 		title = "Ingrediente"
 		super.createMainTemplate(mainPanel)
 	}
 	
-	override def addActions(Panel actions){
-		new Button(actions) => [
-			caption = "Aceptar"
-			onClick [|
-				this.accept
-			]
-			setAsDefault
-			disableOnError	
-		]
-
-		new Button(actions) => [
-			caption = "Cancelar"	
-			onClick [|
-				this.cancel
-			]
-		]
-	}
-	
-	override executeTask() {
-		modelObject.guardar
-		super.executeTask()
-	}
 }

@@ -25,7 +25,7 @@ import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import ar.edu.unq.uis.domino.model.Pizza
 
-class EditarPizzaWindow extends TransactionalDialog<PizzaAppModel>{
+class EditarPizzaWindow extends EditarElementoWindow<PizzaAppModel> {
 	
 	new(WindowOwner owner, Pizza pizza) {
 		super(owner, createViewModel(pizza))
@@ -34,29 +34,16 @@ class EditarPizzaWindow extends TransactionalDialog<PizzaAppModel>{
 	
 	static def createViewModel(Pizza pizza){
 		val model = new PizzaAppModel()
-		model.pizza = pizza
+		model.elemento = pizza
 		return model
 	}
 	
-	def defaultTitle() {
+	override defaultTitle() {
 		"Editar pizza"
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
-		val form = new Panel(mainPanel).layout = new ColumnLayout(2)
-		new Label(form).text = "Nombre"
-		
-		new TextBox(form) => [
-			value <=> "pizza.nombre"
-			width = 200	
-		]
-		
-		new Label(form).text = "Precio"
-			
-		new NumericField(form) => [
-			value <=> "pizza.precio"
-			width = 100
-		]	
+		super.createFormPanel(mainPanel)	
 		crearPanelListas(mainPanel)
 		crearTablaIngredientesAgregados(mainPanel)
 	}
@@ -95,7 +82,7 @@ class EditarPizzaWindow extends TransactionalDialog<PizzaAppModel>{
 	
 	def protected crearTablaIngredientesAgregados(Panel mainPanel) {
 		val table = new Table<IngredienteDistribuido>(mainPanel, typeof(IngredienteDistribuido)) => [
-			items <=> "pizza.ingredientes"
+			items <=> "elemento.ingredientes"
 			//value <=> "seleccionado"
 			numberVisibleRows = 8
 		]
@@ -125,26 +112,6 @@ class EditarPizzaWindow extends TransactionalDialog<PizzaAppModel>{
 		super.createMainTemplate(mainPanel)
 	}
 	
-	override def addActions(Panel actions){
-		new Button(actions) => [
-			caption = "Aceptar"
-			onClick [|
-				this.accept
-			]
-			setAsDefault
-			disableOnError	
-		]
-
-		new Button(actions) => [
-			caption = "Cancelar"	
-			onClick [|
-				this.cancel
-			]
-		]
-	}
 	
-	override executeTask() {
-		modelObject.guardar
-		super.executeTask()
-	}
+	
 }

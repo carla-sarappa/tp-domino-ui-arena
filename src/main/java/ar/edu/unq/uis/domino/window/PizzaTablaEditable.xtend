@@ -33,7 +33,7 @@ class PizzaTablaEditable extends TablaEditable<Pizza> {
 	}
 	
 	override crearVentanaCreacion() {
-		new CrearPizzaWindow(windowOwner)
+		new EditarPizzaWindow(windowOwner, new Pizza())
 	}
 	
 	
