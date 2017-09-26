@@ -14,26 +14,31 @@ import org.uqbar.arena.widgets.tables.Column
 import ar.edu.unq.uis.domino.model.Estado
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
-import ar.edu.unq.uis.domino.appmodel.EditarPedidoAppModel
 import org.uqbar.arena.bindings.PropertyAdapter
 import org.uqbar.arena.widgets.Selector
 import org.uqbar.arena.layout.ColumnLayout
 import ar.edu.unq.uis.domino.model.Pizza
 import ar.edu.unq.uis.domino.model.Plato
 import org.uqbar.arena.widgets.TextBox
+import org.uqbar.arena.windows.WindowOwner
+import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
 
-class EditarPedidoWindow extends SimpleWindow<EditarPedidoAppModel>{
+class EditarPedidoWindow extends Dialog<PedidoAppModel>{
 	
-	
-	new(DominoApplication application) {
-		super(application, new EditarPedidoAppModel)
-	//	modelObject.refresh
+	new(WindowOwner owner, Pedido pedido) {
+		super(owner, createViewModel(pedido))
+		
 	}
 	
-	override def createMainTemplate(Panel mainPanel) {
-		title = "Domino Pizza"
-
+	static def createViewModel(Pedido pedido){
+		val model = new PedidoAppModel()
+		model.elemento = pedido
+		return model
 		
+	}
+		
+	override def createMainTemplate(Panel mainPanel) {
+		title = "Editar pedido"		
 		super.createMainTemplate(mainPanel)
 	}
 	
@@ -44,9 +49,9 @@ class EditarPedidoWindow extends SimpleWindow<EditarPedidoAppModel>{
 		new Label(panelEstado).text = "Estado"
 		
 		new Selector(panelEstado) => [
-            value <=> "ingredienteSeleccionado"
+            value <=> "elemento.estado"
             
-            val bindingItems = items <=> "estados"
+            val bindingItems = items <=> "elemento.formaDeEnvio.estadosPosibles"
      		bindingItems.adapter = new PropertyAdapter(typeof(Estado), "nombre")
             width = 220
             height = 220
@@ -83,7 +88,7 @@ class EditarPedidoWindow extends SimpleWindow<EditarPedidoAppModel>{
 	
 	def protected createResultsGrid(Panel mainPanel) {
 		val table = new Table<Plato>(mainPanel, typeof(Plato)) => [
-			items <=> "platos"
+			items <=> "elemento.platos"
 			value <=> "platoSeleccionado"
 			numberVisibleRows = 12
 		]
@@ -112,7 +117,7 @@ class EditarPedidoWindow extends SimpleWindow<EditarPedidoAppModel>{
 	def aclaracionesPanel(Panel panel){
 		new Label(panel).text = "Aclaraciones"
 		new TextBox(panel) => [
-		    value <=> "aclaraciones"
+		    value <=> "elemento.aclaraciones"
 		    width = 800 
 		]
 		
@@ -124,22 +129,22 @@ class EditarPedidoWindow extends SimpleWindow<EditarPedidoAppModel>{
 		new Label(columnas).text = "Nombre: "
 
 		new Label(columnas) => [
-		    value <=> "cliente.nombre"
+		    value <=> "elemento.cliente.nombre"
 		]
 		new Label(columnas).text = "Costo de envío: "
 
 		new Label(columnas) => [
-		    value <=> "formaDeEnvio.costoEnvio"
+		    value <=> "elemento.formaDeEnvio.costoEnvio"
 		]
 		new Label(columnas).text = "Monto total: "
 
 		new Label(columnas) => [
-		    value <=> "monto"
+		    value <=> "elemento.monto"
 		]
 		new Label(columnas).text = "Fecha y hora: "
 
 		new Label(columnas) => [
-		    value <=> "fecha" // y hora
+		    value <=> "elemento.fecha" // y hora
 		]
 		
 	}
@@ -159,3 +164,4 @@ class EditarPedidoWindow extends SimpleWindow<EditarPedidoAppModel>{
 	
 	
 }
+

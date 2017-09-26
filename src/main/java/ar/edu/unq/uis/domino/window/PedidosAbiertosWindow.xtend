@@ -14,9 +14,10 @@ import org.uqbar.arena.widgets.tables.Column
 import ar.edu.unq.uis.domino.model.Estado
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
+import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
 
 class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
-	
+		
 	new(DominoApplication application) {
 		super(application, new PedidosAbiertosAppModel)
 	//	modelObject.refresh
@@ -43,7 +44,7 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 	}
 	
 	def addPanelActions(Panel panel) {
-		addPaginado(panel)
+		addPanelControlPedido(panel)
 		
 		new Button(panel) => [
 			caption = "Cancelar"
@@ -52,22 +53,22 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		]
 		new Button(panel) => [
 			caption = "Editar"
-			onClick([|])
+			onClick([|abrirEdicionPedido])
 		]
 	}
 	
-	def addPaginado(Panel panel){
-		val navegacionPanel = new Panel(panel)
-		navegacionPanel.layout = new HorizontalLayout()	
+	def addPanelControlPedido(Panel panel){
+		val panelControlPedido = new Panel(panel)
+		panelControlPedido.layout = new HorizontalLayout()	
 		
-		new Button(navegacionPanel) => [
+		new Button(panelControlPedido) => [
 			caption = "<<<"
-			onClick([|])
+			onClick([|modelObject.pedidoSeleccionado.estadoAnterior])
 			
 		]
-		new Button(navegacionPanel) => [
+		new Button(panelControlPedido) => [
 			caption = ">>>"
-			onClick([|])
+			onClick([|modelObject.pedidoSeleccionado.estadoSiguiente])
 		]
 	}
 	
@@ -129,6 +130,10 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 	def void abrirPedidosCerrados(){
 		val cerrados = new PedidosCerradosWindow(this)
 		cerrados.open
+	}
+	
+	def void abrirEdicionPedido(){
+		new EditarPedidoWindow(this, modelObject.pedidoSeleccionado).open
 	}
 	
 	
