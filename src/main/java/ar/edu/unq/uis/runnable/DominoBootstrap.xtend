@@ -14,6 +14,9 @@ import ar.edu.unq.uis.domino.model.Pedido
 import ar.edu.unq.uis.domino.model.Cliente
 import ar.edu.unq.uis.domino.model.Delivery
 import ar.edu.unq.uis.domino.model.RetiraPorElLocal
+import ar.edu.unq.uis.domino.model.Plato
+import ar.edu.unq.uis.domino.repo.RepoPlato
+import ar.edu.unq.uis.domino.model.TamanioJava
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
@@ -22,6 +25,7 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		ApplicationContext.instance.configureSingleton(typeof(Ingrediente), new RepoIngredientes)
 		ApplicationContext.instance.configureSingleton(typeof(Distribucion), new RepoDistribucion)
 		ApplicationContext.instance.configureSingleton(typeof(Pedido), new RepoPedido)
+		ApplicationContext.instance.configureSingleton(typeof(Plato), new RepoPlato)
 	}
 	
 	override run() {
@@ -56,16 +60,26 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		]
 		
 		
-		val cliente = new Cliente("Carla","c@c.c")
+		val cliente = new Cliente("carla.sarappa","c@c.c")
+		cliente.setNombre("Carla")
+		val calabresa = new Pizza("Calabresa", 20.0)
+		val calabresaGrande = new Plato(calabresa, TamanioJava.GRANDE)
 	
 		val repoPedido = ApplicationContext.instance.getSingleton(typeof(Pedido)) as RepoPedido
 		
 		repoPedido => [
-			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 1")
+			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 1").agregarPlato(calabresaGrande)
 			createPedido(cliente, new Delivery("calle falsa 123"), "pedido cliente 2")
 			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 3")
 		]
+		
+//		val repoPlato = ApplicationContext.instance.getSingleton(typeof(Plato)) as RepoPlato
+//		
+//		repoPlato => [
+//			createPlato(pizz)
+//			createPedido(cliente, new Delivery("calle falsa 123"), "pedido cliente 2")
+//			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 3")
+//		]
 	}
-	
 	
 }
