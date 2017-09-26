@@ -9,7 +9,6 @@ import ar.edu.unq.uis.domino.repo.RepoIngredientes
 import ar.edu.unq.uis.domino.model.Distribucion
 import ar.edu.unq.uis.domino.repo.RepoDistribucion
 import ar.edu.unq.uis.domino.model.Estado
-import ar.edu.unq.uis.domino.repo.RepoEstado
 import ar.edu.unq.uis.domino.repo.RepoPedido
 import ar.edu.unq.uis.domino.model.Pedido
 import ar.edu.unq.uis.domino.model.Cliente
@@ -22,7 +21,6 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		ApplicationContext.instance.configureSingleton(typeof(Pizza), new RepoPizza)
 		ApplicationContext.instance.configureSingleton(typeof(Ingrediente), new RepoIngredientes)
 		ApplicationContext.instance.configureSingleton(typeof(Distribucion), new RepoDistribucion)
-		ApplicationContext.instance.configureSingleton(typeof(Estado), new RepoEstado)
 		ApplicationContext.instance.configureSingleton(typeof(Pedido), new RepoPedido)
 	}
 	
@@ -57,16 +55,6 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 			createDistribucion("Mitad derecha")
 		]
 		
-		val repoEstado = ApplicationContext.instance.getSingleton(typeof(Estado)) as RepoEstado
-		
-		repoEstado => [
-			createEstado("Preparando")
-			createEstado("Listo para retirar")
-			createEstado("Listo para enviar")
-			createEstado("En viaje")
-			createEstado("Entregado")
-			createEstado("Cancelado")
-		]
 		
 		val cliente = new Cliente("Carla","c@c.c")
 	
