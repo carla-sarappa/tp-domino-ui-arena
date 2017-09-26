@@ -29,8 +29,14 @@ class PizzaTablaEditable extends TablaEditable<Pizza> {
 	}
 	
 	override crearVentanaEdicion() {
-		new EditarElementoWindow(windowOwner, tablaEditableAppModel.elementoSeleccionado)
+		new EditarPizzaWindow(windowOwner, tablaEditableAppModel.elementoSeleccionado)
 	}
+	
+	override crearVentanaCreacion() {
+		new CrearPizzaWindow(windowOwner)
+	}
+	
+	
 	
 	
 	

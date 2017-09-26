@@ -89,10 +89,11 @@ abstract class TablaEditable<T extends Entity> extends Panel {
 	}
 	
 	def void crearElemento() {
-		this.openDialog(new CrearElementoWindow(windowOwner))
+		this.openDialog(crearVentanaCreacion)
 	}
 	
 	abstract def Dialog<?> crearVentanaEdicion()
+	abstract def Dialog<?> crearVentanaCreacion()
 	
 	def void editarElemento() {
 		this.openDialog(crearVentanaEdicion)

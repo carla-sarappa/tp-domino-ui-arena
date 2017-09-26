@@ -26,7 +26,11 @@ class IngredienteTablaEditable extends TablaEditable<Ingrediente>{
 	}
 	
 	override crearVentanaEdicion() {
-		new EditarElementoWindow(windowOwner, new Pizza())
+		new EditarIngredienteWindow(windowOwner, tablaEditableAppModel.elementoSeleccionado)
+	}
+	
+	override crearVentanaCreacion() {
+		new EditarIngredienteWindow(windowOwner, new Ingrediente())
 	}
 	
 	

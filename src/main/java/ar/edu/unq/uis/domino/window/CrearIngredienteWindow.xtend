@@ -10,10 +10,11 @@ import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.widgets.NumericField
 
 import static extension org.uqbar.arena.xtend.ArenaXtendExtensions.*
+import ar.edu.unq.uis.domino.appmodel.CrearIngredienteAppModel
 
-class CrearIngredienteWindow extends Dialog<CrearIngredienteViewModel>{
+class CrearIngredienteWindow extends Dialog<CrearIngredienteAppModel>{
 	
-	new(WindowOwner owner, CrearIngredienteViewModel model) {
+	new(WindowOwner owner, CrearIngredienteAppModel model) {
 		super(owner, model)
 	}
 	
