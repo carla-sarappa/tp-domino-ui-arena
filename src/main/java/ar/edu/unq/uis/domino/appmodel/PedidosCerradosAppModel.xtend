@@ -13,7 +13,7 @@ class PedidosCerradosAppModel {
 	Pedido pedidoSeleccionado
 	
 	def List<Pedido> getPedidos(){
-		Repositories.getPedidos.allInstances.filter[estado.cerrado].toList()
+		Repositories.getPedidos.allInstances.filter[!estado.abierto].toList()
 	}
 	
 	def eliminarSeleccionado() {

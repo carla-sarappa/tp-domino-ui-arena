@@ -71,16 +71,21 @@ class EditarPedidoWindow extends Dialog<PedidoAppModel>{
 	def crearBotonera(Panel panel) {
 		new Button(panel) => [
 			caption = "Agregar"
-			onClick([| ])	
+			onClick([| ])
+			visible <=> "elemento.estado.abierto"
 		]
 
 		new Button(panel) => [
 			caption = "Editar"
 			onClick([| ])
+			visible <=> "elemento.estado.abierto"
+			
 		]	
 		new Button(panel) => [
 			caption = "Eliminar"
 			onClick([| ])	
+			visible <=> "elemento.estado.abierto"
+			
 		]
 
 	}

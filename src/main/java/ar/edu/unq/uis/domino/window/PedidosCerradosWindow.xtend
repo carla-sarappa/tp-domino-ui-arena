@@ -34,13 +34,13 @@ class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosAppModel> {
 		
 		new Button(actionsPanel) => [
 			caption = "Ver"
-			onClick([|])
+			onClick([|abrirEdicionPedido])
 			
 		]
 		
 		new Button(actionsPanel) => [
 			caption = "Volver"
-			onClick([|])
+			onClick([|this.close])
 			
 		]
 		
@@ -88,5 +88,10 @@ class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosAppModel> {
 			bindContentsToProperty("tiempoDeEspera")
 		]
 	}
+	
+	def void abrirEdicionPedido(){
+		new EditarPedidoWindow(this, modelObject.pedidoSeleccionado).open
+	}
+	
 	
 }
