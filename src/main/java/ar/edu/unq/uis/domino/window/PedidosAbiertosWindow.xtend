@@ -15,6 +15,7 @@ import ar.edu.unq.uis.domino.model.Estado
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
 import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
+import org.uqbar.arena.windows.ErrorsPanel
 
 class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		
@@ -27,6 +28,10 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		title = "Pedidos abiertos"
 	
 		super.createMainTemplate(mainPanel)
+	}
+	
+	override ErrorsPanel createErrorsPanel(Panel mainPanel) {
+		return new ErrorsPanel(mainPanel, this.getTaskDescription(), 2);
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
@@ -63,16 +68,15 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		
 		new Button(panelControlPedido) => [
 			caption = "<<<"
-			bindEnabledToProperty("pedidoSeleccionado.estado.hasPrevious")
-			
-			onClick([|modelObject.pedidoSeleccionado.estadoAnterior])
+			bindEnabledToProperty("pedidoSeleccionadoHasPrevious")
+			onClick([|modelObject.retrocederEstado])
 			
 		]
 		new Button(panelControlPedido) => [
 			caption = ">>>"
-			bindEnabledToProperty("pedidoSeleccionado.estado.hasNext")
+			bindEnabledToProperty("pedidoSeleccionadoHasNext")
 			
-			onClick([|modelObject.pedidoSeleccionado.estadoSiguiente])
+			onClick([|modelObject.avanzarEstado])
 		]
 	}
 	
@@ -120,7 +124,7 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		]
 		new Button(mainPanel) => [
 			caption = "Salir"
-			onClick([|])
+			onClick([|this.close])
 			
 		]
 	

@@ -5,14 +5,15 @@ import ar.edu.unq.uis.domino.model.Pedido
 import org.uqbar.commons.model.utils.ObservableUtils
 import org.uqbar.commons.model.annotations.TransactionalAndObservable
 import org.eclipse.xtend.lib.annotations.Accessors
+import java.util.List
 
 @TransactionalAndObservable
 @Accessors
 class PedidosCerradosAppModel {
 	Pedido pedidoSeleccionado
 	
-	def getPedidos(){
-		Repositories.getPedidos.allInstances
+	def List<Pedido> getPedidos(){
+		Repositories.getPedidos.allInstances.filter[estado.cerrado].toList()
 	}
 	
 	def eliminarSeleccionado() {
