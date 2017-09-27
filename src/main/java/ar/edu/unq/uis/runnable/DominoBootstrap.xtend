@@ -16,7 +16,7 @@ import ar.edu.unq.uis.domino.model.Delivery
 import ar.edu.unq.uis.domino.model.RetiraPorElLocal
 import ar.edu.unq.uis.domino.model.Plato
 import ar.edu.unq.uis.domino.repo.RepoPlato
-import ar.edu.unq.uis.domino.model.TamanioJava
+import ar.edu.unq.uis.domino.model.Tamanio
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
@@ -30,6 +30,7 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 	
 	override run() {
 		val repoPizza = ApplicationContext.instance.getSingleton(typeof(Pizza)) as RepoPizza
+		val calabresa = repoPizza.createPromo("Calabresa", 40.0)
 		
 		repoPizza => [
 			createPromo("Capresse", 15.0)
@@ -37,8 +38,9 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 			createPromo("Jamon y queso", 25.0)
 			createPromo("Jamon y morrones", 30.0)
 			createPromo("Anana", 35.0)
-			createPromo("Calabresa", 40.0)
 		]
+		
+		
 		
 		val repoIngredientes = ApplicationContext.instance.getSingleton(typeof(Ingrediente)) as RepoIngredientes
 		
@@ -62,8 +64,7 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		
 		val cliente = new Cliente("carla.sarappa","c@c.c")
 		cliente.setNombre("Carla")
-		val calabresa = new Pizza("Calabresa", 20.0)
-		val calabresaGrande = new Plato(calabresa, TamanioJava.GRANDE)
+		val calabresaGrande = new Plato(calabresa, Tamanio.GRANDE)
 	
 		val repoPedido = ApplicationContext.instance.getSingleton(typeof(Pedido)) as RepoPedido
 		

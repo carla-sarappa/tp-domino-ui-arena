@@ -79,7 +79,7 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 
 		new Button(panel) => [
 			caption = "Editar"
-			onClick([| ])
+			onClick([| abrirEdicionPlato])
 			visible <=> "elemento.estado.abierto"
 			
 		]	
@@ -147,7 +147,7 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 		new Label(columnas).text = "Monto total: "
 
 		new Label(columnas) => [
-		    value <=> "elemento.monto"
+		    value <=> "monto"
 		]
 		new Label(columnas).text = "Fecha y hora: "
 
@@ -157,19 +157,11 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 		
 	}
 	
-//	override protected addActions(Panel actionsPanel) {
-//		new Button(actionsPanel) => [
-//			caption = "Aceptar"
-//			onClick([| ])	
-//		]
-//
-//		new Button(actionsPanel) => [
-//			caption = "Cancelar"
-//			onClick([|this.close])
-//		]	
-//		
-//	}
-//	
+	def void abrirEdicionPlato(){
+		val window = new EditarPlatoWindow(this, modelObject.platoSeleccionado)
+		window.onAccept[ | modelObject.refresh]
+		window.open
+	}
 
 	override protected addActions(Panel actions){
 		new Button(actions) => [
@@ -191,7 +183,6 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 		modelObject.guardar
 		super.executeTask()
 	}
-	
-	
+
 }
 

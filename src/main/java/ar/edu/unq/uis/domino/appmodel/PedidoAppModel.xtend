@@ -14,6 +14,7 @@ import org.uqbar.commons.model.annotations.Dependencies
 import ar.edu.unq.uis.domino.repo.Repositories
 import ar.edu.unq.uis.domino.model.Pedido
 import ar.edu.unq.uis.domino.model.Plato
+import java.util.List
 
 @Accessors
 @TransactionalAndObservable
@@ -24,6 +25,16 @@ class PedidoAppModel extends ElementoAppModel<Pedido>{
 		Repositories.getPedidos()
 	}
 	
+	def refresh() {
+		ObservableUtils.firePropertyChanged(this, "elemento")
+		ObservableUtils.firePropertyChanged(this.elemento, "platos")
+		ObservableUtils.firePropertyChanged(this, "platoSeleccionado")
+		ObservableUtils.firePropertyChanged(this, "monto")
+	}
 	
+	@Dependencies("elemento.platos")
+	def double getMonto(){
+		return elemento.monto
+	}
 	
 }
