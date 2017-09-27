@@ -141,7 +141,9 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 	}
 	
 	def void abrirEdicionPedido(){
-		new EditarPedidoWindow(this, modelObject.pedidoSeleccionado).open
+		val window = new EditarPedidoWindow(this, modelObject.pedidoSeleccionado)
+		window.onAccept[ | modelObject.refresh]
+		window.open
 	}
 	
 	

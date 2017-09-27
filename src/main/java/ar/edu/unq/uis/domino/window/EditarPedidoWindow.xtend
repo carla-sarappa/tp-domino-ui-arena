@@ -22,8 +22,9 @@ import ar.edu.unq.uis.domino.model.Plato
 import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.WindowOwner
 import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
+import org.uqbar.arena.aop.windows.TransactionalDialog
 
-class EditarPedidoWindow extends Dialog<PedidoAppModel>{
+class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	
 	new(WindowOwner owner, Pedido pedido) {
 		super(owner, createViewModel(pedido))
@@ -50,6 +51,7 @@ class EditarPedidoWindow extends Dialog<PedidoAppModel>{
 		
 		new Selector(panelEstado) => [
             value <=> "elemento.estado"
+            enabled <=> "elemento.estado.abierto"
             
             val bindingItems = items <=> "elemento.formaDeEnvio.estadosPosibles"
      		bindingItems.adapter = new PropertyAdapter(typeof(Estado), "nombre")
@@ -122,7 +124,8 @@ class EditarPedidoWindow extends Dialog<PedidoAppModel>{
 	def aclaracionesPanel(Panel panel){
 		new Label(panel).text = "Aclaraciones"
 		new TextBox(panel) => [
-		    value <=> "elemento.aclaraciones"
+			enabled <=> "elemento.estado.abierto"
+			value <=> "elemento.aclaraciones"
 		    width = 800 
 		]
 		
@@ -154,17 +157,39 @@ class EditarPedidoWindow extends Dialog<PedidoAppModel>{
 		
 	}
 	
-	override protected addActions(Panel actionsPanel) {
-		new Button(actionsPanel) => [
+//	override protected addActions(Panel actionsPanel) {
+//		new Button(actionsPanel) => [
+//			caption = "Aceptar"
+//			onClick([| ])	
+//		]
+//
+//		new Button(actionsPanel) => [
+//			caption = "Cancelar"
+//			onClick([|this.close])
+//		]	
+//		
+//	}
+//	
+
+	override protected addActions(Panel actions){
+		new Button(actions) => [
 			caption = "Aceptar"
-			onClick([| ])	
+			onClick [|
+				this.accept
+			]	
 		]
 
-		new Button(actionsPanel) => [
-			caption = "Cancelar"
-			onClick([| ])
-		]	
-		
+		new Button(actions) => [
+			caption = "Cancelar"	
+			onClick [|
+				this.cancel
+			]
+		]
+	}
+	
+	override executeTask() {
+		modelObject.guardar
+		super.executeTask()
 	}
 	
 	
