@@ -16,12 +16,11 @@ class PedidosAbiertosAppModel {
 		Repositories.getPedidos.allInstances
 	}
 	
-	def eliminarSeleccionado() {
+	def cancelarSeleccionado() {
 		if (pedidoSeleccionado == null){
 			return
 		}
-		Repositories.getPedidos.delete(pedidoSeleccionado)
-		pedidoSeleccionado = null
+		pedidoSeleccionado.cancelar()
 		refresh
 	}
 	

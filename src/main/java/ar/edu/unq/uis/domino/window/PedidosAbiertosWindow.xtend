@@ -48,7 +48,7 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		
 		new Button(panel) => [
 			caption = "Cancelar"
-			onClick([|])
+			onClick([|modelObject.cancelarSeleccionado])
 			
 		]
 		new Button(panel) => [
@@ -63,11 +63,15 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		
 		new Button(panelControlPedido) => [
 			caption = "<<<"
+			bindEnabledToProperty("pedidoSeleccionado.estado.hasPrevious")
+			
 			onClick([|modelObject.pedidoSeleccionado.estadoAnterior])
 			
 		]
 		new Button(panelControlPedido) => [
 			caption = ">>>"
+			bindEnabledToProperty("pedidoSeleccionado.estado.hasNext")
+			
 			onClick([|modelObject.pedidoSeleccionado.estadoSiguiente])
 		]
 	}
