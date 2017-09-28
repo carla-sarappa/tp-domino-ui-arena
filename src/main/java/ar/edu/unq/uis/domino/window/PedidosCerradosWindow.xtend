@@ -83,6 +83,7 @@ class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosAppModel> {
 			bindContentsToProperty("fecha").setTransformer(new FechaAdapter)
 		]
 		
+		
 		new Column<Pedido>(table) => [
 			title = "Tiempo de espera"
 			fixedSize = 300

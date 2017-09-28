@@ -21,6 +21,8 @@ import ar.edu.unq.uis.domino.repo.Repositories
 import ar.edu.unq.uis.domino.repo.RepoCliente
 import ar.edu.unq.uis.domino.model.GmailSender
 import java.util.Date
+import ar.edu.unq.uis.domino.model.Cancelado
+import ar.edu.unq.uis.domino.model.Entregado
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
@@ -87,6 +89,16 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		val pedido4 = repoPedido.createPedido(carlaSarappa, new Delivery("calle falsa 123"), "Pedido 4")
 		val pedido5 = repoPedido.createPedido(maria, new RetiraPorElLocal, "Pedido 5")
 		val pedido6 = repoPedido.createPedido(maria, new Delivery("Lebenshon 44"), "Pedido 6")
+		
+		val pedido7 = repoPedido.createPedido(gisele, new RetiraPorElLocal, "Pedido 7")
+		pedido7.fecha = new Date("2017/09/22")
+		pedido7.estado = new Cancelado
+		
+		
+		val pedido8 = repoPedido.createPedido(gisele, new RetiraPorElLocal, "Pedido 8")
+		pedido8.fecha = new Date("2017/09/27")
+		pedido8.estado = new Entregado
+		pedido8.fechaCerrado = new Date()
 
 		
 		val repoPlato = ApplicationContext.instance.getSingleton(typeof(Plato)) as RepoPlato

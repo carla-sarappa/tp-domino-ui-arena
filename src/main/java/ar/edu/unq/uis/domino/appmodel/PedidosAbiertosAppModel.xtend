@@ -7,11 +7,12 @@ import org.uqbar.commons.model.utils.ObservableUtils
 import ar.edu.unq.uis.domino.model.Pedido
 import java.util.List
 import org.uqbar.commons.model.annotations.Dependencies
+import java.util.ArrayList
 
 @Accessors
 @Observable
 class PedidosAbiertosAppModel {
-	
+	List<Pedido> pedidos = new ArrayList<Pedido>()
 	Pedido pedidoSeleccionado
 	
 	@Dependencies("pedidoSeleccionado")
@@ -24,8 +25,9 @@ class PedidosAbiertosAppModel {
 		pedidoSeleccionado != null && pedidoSeleccionado.estado.hasPrevious
 	}
 	
-	def List<Pedido> getPedidos(){
-		Repositories.getPedidos.allInstances.filter[estado.abierto].toList()
+	def searchPedidos(){
+		pedidos = null
+		pedidos = Repositories.getPedidos.allInstances.filter[estado.abierto].sortBy[it.fecha].toList()
 	}
 	
 	def cancelarSeleccionado() {
@@ -38,6 +40,7 @@ class PedidosAbiertosAppModel {
 	}
 	
 	def refresh(){
+		searchPedidos()
 		ObservableUtils.firePropertyChanged(this, "pedidos", getPedidos)
 		ObservableUtils.firePropertyChanged(this, "pedidoSeleccionado")
 	}
