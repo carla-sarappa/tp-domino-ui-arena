@@ -33,7 +33,7 @@ class MenuWindow extends SimpleWindow<MenuAppModel> {
 		
 		new Button(actionsPanel) => [
 			caption = "Cerrar"
-			onClick([|])
+			onClick([| this.close])
 			alignRight
 			
 		]

@@ -19,7 +19,7 @@ import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.commons.model.utils.ObservableUtils
 
-class EditarPlatoWindow extends TransactionalDialog<PlatoAppModel>{
+class EditarPlatoWindow extends EditarConIngredientesWindow<PlatoAppModel>{
 	
 	new(WindowOwner owner, Plato plato) {
 		this(owner, createViewModel(plato))
@@ -37,7 +37,7 @@ class EditarPlatoWindow extends TransactionalDialog<PlatoAppModel>{
 	}
 	
 	
-	def defaultTitle() {
+	override def defaultTitle() {
 		"Editar plato"
 	}
 	
@@ -69,30 +69,14 @@ class EditarPlatoWindow extends TransactionalDialog<PlatoAppModel>{
 	
 	def crearPanelAgregados(Panel mainPanel){
 		new Label(mainPanel).text = "Agregados"
-	}
+		crearPanelListas(mainPanel)
+		crearTablaIngredientesAgregados(mainPanel)
 		
-	
-	override protected addActions(Panel actions){
-		new Button(actions) => [
-			caption = "Aceptar"
-			onClick [|
-				this.accept
-					
-			]	
-			
-		]
-
-		new Button(actions) => [
-			caption = "Cancelar"	
-			onClick [|
-				this.cancel
-			]
-		]
 	}
 	
-	override executeTask() {
-		modelObject.guardar
-		super.executeTask()
+	override onAgregarIngredienteClick() {
+		modelObject.agregarIngrediente
+		
 	}
 	
 }

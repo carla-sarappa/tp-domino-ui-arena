@@ -15,8 +15,9 @@ import ar.edu.unq.uis.domino.model.IngredienteDistribuido
 import org.uqbar.arena.widgets.tables.Table
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.widgets.tables.Column
+import ar.edu.unq.uis.domino.appmodel.ConIngredienteAppModel
 
-abstract class EditarConIngredientesWindow<T extends ElementoAppModel> extends EditarElementoWindow<T>{
+abstract class EditarConIngredientesWindow<T extends ConIngredienteAppModel> extends EditarElementoWindow<T>{
 	
 	new(WindowOwner owner, T model) {
 		super(owner, model)
@@ -27,7 +28,6 @@ abstract class EditarConIngredientesWindow<T extends ElementoAppModel> extends E
 		
 		new Selector(listas) => [
             value <=> "ingredienteSeleccionado"
-            
             val bindingItems = items <=> "ingredientes"
      		bindingItems.adapter = new PropertyAdapter(typeof(Ingrediente), "nombre")
             width = 220
@@ -45,11 +45,22 @@ abstract class EditarConIngredientesWindow<T extends ElementoAppModel> extends E
 		new Button(listas) => [
 			caption = "Agregar ingrediente a la pizza"
 			onClick([| onAgregarIngredienteClick])
-			//visible <=> "puedeAgregarIngrediente"
-			bindVisible(new NotNullObservable("ingredienteSeleccionado"))
+			enabled <=> "puedeAgregarIngrediente"
+//			bindVisible(new NotNullObservable("ingredienteSeleccionado"))
 			//bindVisible(new NotNullObservable("distribucionSeleccionada"))
 			disableOnError
 		]
+		
+		new Button(listas) => [
+			caption = "Quitar ingrediente"
+			onClick([| modelObject.eliminarSeleccionado])
+//			bindVisible(new NotNullObservable("seleccionado"))
+			enabled <=> "puedeQuitarIngrediente"
+			disableOnError
+			
+		]
+		
+		
 	}
 	
 	def abstract void onAgregarIngredienteClick()
@@ -57,7 +68,7 @@ abstract class EditarConIngredientesWindow<T extends ElementoAppModel> extends E
 	def protected crearTablaIngredientesAgregados(Panel mainPanel) {
 		val table = new Table<IngredienteDistribuido>(mainPanel, typeof(IngredienteDistribuido)) => [
 			items <=> "elemento.ingredientes"
-			//value <=> "seleccionado"
+			value <=> "seleccionado"
 			numberVisibleRows = 8
 		]
 		this.describeResultsGrid(table)
@@ -79,7 +90,6 @@ abstract class EditarConIngredientesWindow<T extends ElementoAppModel> extends E
 			bindContentsToProperty("distribucion.nombre")
 		]
 	}
-	
 	
 	
 }

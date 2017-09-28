@@ -15,47 +15,17 @@ import ar.edu.unq.uis.domino.repo.Repositories
 
 @Accessors
 @TransactionalAndObservable
-class PizzaAppModel extends ElementoAppModel<Pizza>{
-	
-	Ingrediente ingredienteSeleccionado
-	Distribucion distribucionSeleccionada
+class PizzaAppModel extends ConIngredienteAppModel<Pizza>{
 	
 	new(){
 		this.elemento = new Pizza()	
 	}
 	
-	def getIngredientes(){
-		Repositories.getIngredientes().allInstances
-	}
-	
-	def eliminarSeleccionado() {
-		if (ingredienteSeleccionado == null){
-			return
-		}
-		Repositories.getIngredientes().delete(ingredienteSeleccionado)
-		ingredienteSeleccionado = null
-		refresh
-	}
-	
-	def refresh(){
-		ObservableUtils.firePropertyChanged(this, "ingredientes", getIngredientes)
-	}
-	
-	def getDistribuciones(){
-		Repositories.getDistribuciones.allInstances
-	}
-	
-	def agregarIngrediente() {
+	override def agregarIngrediente() {
 		val nuevo = new IngredienteDistribuido(ingredienteSeleccionado, distribucionSeleccionada)
 		elemento.agregarIngrediente(nuevo)
 		ObservableUtils.firePropertyChanged(elemento, "ingredientes", elemento.ingredientes)		
 	}
-	
-	@Dependencies("ingredienteSeleccionado", "distribucionSeleccionada")
-	def isPuedeAgregarIngrediente(){
-		ingredienteSeleccionado != null && distribucionSeleccionada != null
-	}
-	
 	
 	override getRepository() {
 		Repositories.getPizzas()

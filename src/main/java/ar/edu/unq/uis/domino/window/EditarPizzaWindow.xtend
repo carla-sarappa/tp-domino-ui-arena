@@ -50,7 +50,7 @@ class EditarPizzaWindow extends EditarConIngredientesWindow<PizzaAppModel> {
 	
 		
 	override def createMainTemplate(Panel mainPanel) {
-		title = "Pizza"
+		title = "Editar pizza"
 		super.createMainTemplate(mainPanel)
 	}
 	

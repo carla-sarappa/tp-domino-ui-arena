@@ -16,12 +16,13 @@ import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
 import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
 import org.uqbar.arena.windows.ErrorsPanel
+import org.uqbar.arena.bindings.NotNullObservable
 
 class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		
 	new(DominoApplication application) {
 		super(application, new PedidosAbiertosAppModel)
-	//	modelObject.refresh
+		modelObject.refresh
 	}
 	
 	override def createMainTemplate(Panel mainPanel) {
@@ -54,11 +55,13 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		new Button(panel) => [
 			caption = "Cancelar"
 			onClick([|modelObject.cancelarSeleccionado])
-			
+			bindEnabled(new NotNullObservable("pedidoSeleccionado"))
 		]
 		new Button(panel) => [
 			caption = "Editar"
 			onClick([|abrirEdicionPedido])
+			bindEnabled(new NotNullObservable("pedidoSeleccionado"))
+			
 		]
 	}
 	
