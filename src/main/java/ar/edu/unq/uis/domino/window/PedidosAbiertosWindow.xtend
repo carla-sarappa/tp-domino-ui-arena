@@ -18,6 +18,7 @@ import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
 import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.bindings.NotNullObservable
 import ar.edu.unq.uis.domino.adapters.MoneyAdapter
+import ar.edu.unq.uis.domino.adapters.HoraAdapter
 
 class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		
@@ -112,7 +113,7 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		new Column<Pedido>(table) => [
 			title = "Hora"
 			fixedSize = 300
-			bindContentsToProperty("fecha")
+			bindContentsToProperty("fecha").setTransformer(new HoraAdapter())
 		]
 	}
 	

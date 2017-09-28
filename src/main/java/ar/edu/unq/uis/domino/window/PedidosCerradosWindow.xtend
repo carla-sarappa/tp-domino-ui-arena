@@ -15,6 +15,9 @@ import ar.edu.unq.uis.domino.model.Estado
 import ar.edu.unq.uis.domino.appmodel.PedidosCerradosAppModel
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.WindowOwner
+import org.uqbar.arena.bindings.DateTransformer
+import ar.edu.unq.uis.domino.adapters.FechaAdapter
+import java.sql.Date
 
 class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosAppModel> {
 	
@@ -41,9 +44,7 @@ class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosAppModel> {
 		new Button(actionsPanel) => [
 			caption = "Volver"
 			onClick([|this.close])
-			
 		]
-		
 		
 	}
 	
@@ -79,13 +80,16 @@ class PedidosCerradosWindow extends SimpleWindow<PedidosCerradosAppModel> {
 		new Column<Pedido>(table) => [
 			title = "Fecha"
 			fixedSize = 300
-			bindContentsToProperty("fecha")
+			bindContentsToProperty("fecha").setTransformer(new FechaAdapter)
 		]
 		
 		new Column<Pedido>(table) => [
 			title = "Tiempo de espera"
 			fixedSize = 300
-			bindContentsToProperty("tiempoDeEspera")
+			bindContentsToProperty("tiempoDeEspera").setTransformer[
+				if (it == null) "--" else 
+					if (it == 1) it + " min" else it + " mins"
+			]
 		]
 	}
 	
