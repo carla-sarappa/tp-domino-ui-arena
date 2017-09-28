@@ -19,11 +19,15 @@ import ar.edu.unq.uis.domino.repo.RepoPlato
 import ar.edu.unq.uis.domino.model.Tamanio
 import ar.edu.unq.uis.domino.repo.Repositories
 import ar.edu.unq.uis.domino.repo.RepoCliente
+import ar.edu.unq.uis.domino.model.GmailSender
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
 	new() {
 		Repositories.init
+		ApplicationContext.instance.configureSingleton(typeof(GmailSender), 
+			new GmailSender("ciu.dominos.pizza@gmail.com", "interfaces2017"))    	
+		
 	}
 	
 	override run() {
