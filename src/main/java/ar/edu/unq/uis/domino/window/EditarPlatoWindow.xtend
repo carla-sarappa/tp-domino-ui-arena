@@ -68,7 +68,7 @@ class EditarPlatoWindow extends TransactionalDialog<PlatoAppModel>{
 	}
 	
 	def crearPanelAgregados(Panel mainPanel){
-		
+		new Label(mainPanel).text = "Agregados"
 	}
 		
 	
