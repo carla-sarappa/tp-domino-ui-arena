@@ -37,11 +37,6 @@ class PlatoAppModel extends ConIngredienteAppModel<Plato>{
 	}
 	
 	override agregarIngrediente(){
-//		val newIngredientes = new ArrayList<IngredienteDistribuido>()
-//		newIngredientes.addAll(elemento.ingredientes)
-//		newIngredientes.add(new IngredienteDistribuido(ingredienteSeleccionado, distribucionSeleccionada))
-//		elemento.ingredientes = newIngredientes
-
 		elemento.ingredientes.add(new IngredienteDistribuido(ingredienteSeleccionado, distribucionSeleccionada))
 		ObservableUtils.firePropertyChanged(elemento, "ingredientes", elemento.ingredientes)		
 		

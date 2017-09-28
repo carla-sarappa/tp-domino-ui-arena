@@ -65,6 +65,7 @@ class EditarPlatoWindow extends EditarConIngredientesWindow<PlatoAppModel>{
 		]	
 		
 		crearPanelAgregados(mainPanel)
+		crearPanelPrecio(mainPanel)
 	}
 	
 	def crearPanelAgregados(Panel mainPanel){
@@ -72,6 +73,14 @@ class EditarPlatoWindow extends EditarConIngredientesWindow<PlatoAppModel>{
 		crearPanelListas(mainPanel)
 		crearTablaIngredientesAgregados(mainPanel)
 		
+	}
+	
+	def crearPanelPrecio(Panel mainPanel){
+		val precio = new Panel(mainPanel).layout = new ColumnLayout(2)
+		new Label(precio).text = "Precio"
+		new Label(precio) => [
+		    value <=> "elemento.precio"
+		]
 	}
 	
 	override onAgregarIngredienteClick() {
