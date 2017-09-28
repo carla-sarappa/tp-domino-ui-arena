@@ -86,10 +86,8 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		val pedido3 = repoPedido.createPedido(fede, new RetiraPorElLocal, "Pedido 3")
 		val pedido4 = repoPedido.createPedido(carlaSarappa, new Delivery("calle falsa 123"), "Pedido 4")
 		val pedido5 = repoPedido.createPedido(maria, new RetiraPorElLocal, "Pedido 5")
-		
-		repoPedido => [
-			createPedido(maria, new Delivery("Lebenshon 44"), "Pedido 6")
-		]
+		val pedido6 = repoPedido.createPedido(maria, new Delivery("Lebenshon 44"), "Pedido 6")
+
 		
 		val repoPlato = ApplicationContext.instance.getSingleton(typeof(Plato)) as RepoPlato
 		
