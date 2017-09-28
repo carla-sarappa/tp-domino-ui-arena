@@ -20,6 +20,7 @@ import ar.edu.unq.uis.domino.model.Tamanio
 import ar.edu.unq.uis.domino.repo.Repositories
 import ar.edu.unq.uis.domino.repo.RepoCliente
 import ar.edu.unq.uis.domino.model.GmailSender
+import java.util.Date
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
@@ -33,6 +34,9 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 	override run() {
 		val repoPizza = ApplicationContext.instance.getSingleton(typeof(Pizza)) as RepoPizza
 		val calabresa = repoPizza.createPromo("Calabresa", 40.0)
+		val napolitana = repoPizza.createPromo("Napolitana", 100.0)
+		val margherita = repoPizza.createPromo("Margherita", 80.0)
+		val cuatroQuesos = repoPizza.createPromo("Cuatro quesos", 20.0)
 		
 		repoPizza => [
 			createPromo("Capresse", 15.0)
@@ -69,30 +73,43 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		]		
 		
 		
-		val cliente = new Cliente("carla.sarappa","c@c.c", "Carla Sarappa")
-		cliente.setNombre("Carla")
+		val carlaSarappa = new Cliente("carla.sarappa","c@c.c", "Carla Sarappa")
+		val gisele = new Cliente("escobargisele","escobargisele@g.com", "Gisele Escobar")
+		val fede = new Cliente("fede11","fede@fede.c", "Fede")
+		val maria = new Cliente("maria","maria@maria.com", "Maria Lopez")
 	
 		val repoPedido = ApplicationContext.instance.getSingleton(typeof(Pedido)) as RepoPedido
-		val pedido4 = repoPedido.createPedido(cliente, new RetiraPorElLocal, "pedido 4")
-		val pedido5 = repoPedido.createPedido(cliente, new RetiraPorElLocal, "pedido 5")
-		
+		val pedido1 = repoPedido.createPedido(carlaSarappa, new RetiraPorElLocal, "Pedido 1")
+		pedido1.fecha = new Date(System.currentTimeMillis - minutos(40))
+		val pedido2 = repoPedido.createPedido(gisele, new RetiraPorElLocal, "Pedido 2")
+		pedido2.fecha = new Date(System.currentTimeMillis - minutos(20))
+		val pedido3 = repoPedido.createPedido(fede, new RetiraPorElLocal, "Pedido 3")
+		val pedido4 = repoPedido.createPedido(carlaSarappa, new Delivery("calle falsa 123"), "Pedido 4")
+		val pedido5 = repoPedido.createPedido(maria, new RetiraPorElLocal, "Pedido 5")
 		
 		repoPedido => [
-			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 1")
-			createPedido(cliente, new Delivery("calle falsa 123"), "pedido cliente 2")
-			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 3")
+			createPedido(maria, new Delivery("Lebenshon 44"), "Pedido 6")
 		]
-		
 		
 		val repoPlato = ApplicationContext.instance.getSingleton(typeof(Plato)) as RepoPlato
-		val calabresaGrande = repoPlato.createPlato(calabresa, Tamanio.FAMILIAR, pedido4)
 		
 		repoPlato => [
-			createPlato(calabresa, Tamanio.GRANDE, pedido5)
-			createPlato(calabresa, Tamanio.CHICA, pedido5)
-			createPlato(calabresa, Tamanio.PORCION, pedido5)
+			createPlato(calabresa, Tamanio.FAMILIAR, pedido1)
 			
+			createPlato(napolitana, Tamanio.GRANDE, pedido2)
+			createPlato(calabresa, Tamanio.CHICA, pedido2)
+			createPlato(cuatroQuesos, Tamanio.PORCION, pedido2)
+			
+			createPlato(margherita, Tamanio.CHICA, pedido3)
+			
+			createPlato(napolitana, Tamanio.PORCION, pedido4)
+			
+			createPlato(cuatroQuesos, Tamanio.PORCION, pedido5)
 		]
+	}
+	
+	def minutos(int i) {
+		i *60*1000 
 	}
 	
 }

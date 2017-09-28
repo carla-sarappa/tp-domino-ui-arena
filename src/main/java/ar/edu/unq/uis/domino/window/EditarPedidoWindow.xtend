@@ -27,6 +27,7 @@ import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.bindings.NotNullObservable
 import org.uqbar.arena.bindings.DateTransformer
 import ar.edu.unq.uis.domino.adapters.MoneyAdapter
+import ar.edu.unq.uis.domino.adapters.FechaYHoraAdapter
 
 class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	
@@ -164,7 +165,7 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 		new Label(columnas).text = "Fecha y hora: "
 
 		new Label(columnas) => [
-		    bindValueToProperty("elemento.fecha").setTransformer(new DateTransformer())
+		    bindValueToProperty("elemento.fecha").setTransformer(new FechaYHoraAdapter())
 		]
 		
 	}
