@@ -18,6 +18,7 @@ import ar.edu.unq.uis.domino.model.Plato
 import ar.edu.unq.uis.domino.repo.RepoPlato
 import ar.edu.unq.uis.domino.model.Tamanio
 import ar.edu.unq.uis.domino.repo.Repositories
+import ar.edu.unq.uis.domino.repo.RepoCliente
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
@@ -36,7 +37,6 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 			createPromo("Jamon y morrones", 30.0)
 			createPromo("Anana", 35.0)
 		]
-		
 		
 		
 		val repoIngredientes = ApplicationContext.instance.getSingleton(typeof(Ingrediente)) as RepoIngredientes
@@ -58,8 +58,14 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 			createDistribucion("Mitad derecha")
 		]
 		
+		val repoCliente = ApplicationContext.instance.getSingleton(typeof(Cliente)) as RepoCliente
+		repoCliente => [
+			createCliente("carla11", "carla11@gmail.com", "Carla 11")
+			createCliente("carla12", "carla12@gmail.com", "Carla 12")
+		]		
 		
-		val cliente = new Cliente("carla.sarappa","c@c.c")
+		
+		val cliente = new Cliente("carla.sarappa","c@c.c", "Carla Sarappa")
 		cliente.setNombre("Carla")
 	
 		val repoPedido = ApplicationContext.instance.getSingleton(typeof(Pedido)) as RepoPedido
