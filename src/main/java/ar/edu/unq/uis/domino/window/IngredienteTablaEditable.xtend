@@ -16,9 +16,10 @@ class IngredienteTablaEditable extends TablaEditable<Ingrediente>{
 		super(panel, model, window)
 	}
 	
+	
+	
 	def getRepository() {
 		Repositories.getIngredientes()
-	
 	}
 	
 	override getTypeOfTableElement() {
@@ -31,6 +32,10 @@ class IngredienteTablaEditable extends TablaEditable<Ingrediente>{
 	
 	override crearVentanaCreacion() {
 		new EditarIngredienteWindow(windowOwner, new Ingrediente())
+	}
+	
+	override getTitle() {
+		"Ingredientes disponibles"
 	}
 	
 	

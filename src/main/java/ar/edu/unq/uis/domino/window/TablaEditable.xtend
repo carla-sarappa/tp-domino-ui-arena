@@ -16,12 +16,12 @@ import ar.edu.unq.uis.domino.appmodel.TablaEditableAppModel
 import org.uqbar.arena.windows.WindowOwner
 import org.uqbar.arena.windows.Window
 import org.uqbar.commons.model.Entity
+import ar.edu.unq.uis.domino.adapters.MoneyAdapter
 
 @Accessors
 abstract class TablaEditable<T extends Entity> extends Panel {
 	
 	TablaEditableAppModel<T> tablaEditableAppModel
-	String nombreTabla
 	WindowOwner windowOwner
 	
 	new(Container container, TablaEditableAppModel<T> tablaEditableAppModel, WindowOwner windowOwner) {
@@ -31,8 +31,9 @@ abstract class TablaEditable<T extends Entity> extends Panel {
 		
 		this.layout = new VerticalLayout()
 		createFormPanel(this)
-		
 	}
+	
+	abstract def String getTitle()
 
 	def addPanelActions(Panel actionsPanel) {
 		new Button(actionsPanel) => [
@@ -52,7 +53,7 @@ abstract class TablaEditable<T extends Entity> extends Panel {
 	}
 
 	def createFormPanel(Panel mainPanel) {
-		new Label(mainPanel).text = nombreTabla
+		new Label(mainPanel).text = getTitle()
 		
 		val horizontalPanel = new Panel(mainPanel)
 		horizontalPanel.layout = new HorizontalLayout()		
@@ -84,7 +85,8 @@ abstract class TablaEditable<T extends Entity> extends Panel {
 			title = "Precio"
 			fixedSize = 200
 			alignRight
-			bindContentsToProperty("precio")
+			bindContentsToProperty("precio").setTransformer(new MoneyAdapter())
+			
 		]
 	}
 	

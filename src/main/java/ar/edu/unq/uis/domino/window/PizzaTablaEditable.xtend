@@ -23,6 +23,9 @@ class PizzaTablaEditable extends TablaEditable<Pizza> {
 		super(container, pizzaTablaEditableAppModel, windowOwner)
 	}
 
+	override String getTitle(){
+		"Promos"
+	}
 	
 	override getTypeOfTableElement() {
 		return typeof(Pizza)

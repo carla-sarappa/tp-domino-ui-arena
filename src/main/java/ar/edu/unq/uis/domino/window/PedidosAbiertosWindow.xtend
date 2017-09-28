@@ -17,6 +17,7 @@ import org.uqbar.arena.windows.Dialog
 import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
 import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.bindings.NotNullObservable
+import ar.edu.unq.uis.domino.adapters.MoneyAdapter
 
 class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		
@@ -105,7 +106,7 @@ class PedidosAbiertosWindow extends Dialog<PedidosAbiertosAppModel> {
 		new Column<Pedido>(table) => [
 			title = "Monto"
 			fixedSize = 300
-			bindContentsToProperty("monto")
+			bindContentsToProperty("monto").setTransformer(new MoneyAdapter())
 		]
 		
 		new Column<Pedido>(table) => [

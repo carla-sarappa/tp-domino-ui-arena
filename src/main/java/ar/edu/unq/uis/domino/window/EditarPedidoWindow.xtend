@@ -25,6 +25,8 @@ import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
 import org.uqbar.arena.aop.windows.TransactionalDialog
 import org.uqbar.arena.windows.ErrorsPanel
 import org.uqbar.arena.bindings.NotNullObservable
+import org.uqbar.arena.bindings.DateTransformer
+import ar.edu.unq.uis.domino.adapters.MoneyAdapter
 
 class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	
@@ -126,7 +128,7 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 			title = "Precio"
 			fixedSize = 200
 			alignRight
-			bindContentsToProperty("precio")
+			bindContentsToProperty("precio").setTransformer(new MoneyAdapter())			
 		]
 	}
 	
@@ -151,17 +153,18 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 		new Label(columnas).text = "Costo de envío: "
 
 		new Label(columnas) => [
-		    value <=> "elemento.formaDeEnvio.costoEnvio"
+		    bindValueToProperty("elemento.formaDeEnvio.costoEnvio").setTransformer(new MoneyAdapter())
 		]
 		new Label(columnas).text = "Monto total: "
 
 		new Label(columnas) => [
-		    value <=> "monto"
+		    bindValueToProperty("monto").setTransformer(new MoneyAdapter())
+
 		]
 		new Label(columnas).text = "Fecha y hora: "
 
 		new Label(columnas) => [
-		    value <=> "elemento.fecha" // y hora
+		    bindValueToProperty("elemento.fecha").setTransformer(new DateTransformer())
 		]
 		
 	}

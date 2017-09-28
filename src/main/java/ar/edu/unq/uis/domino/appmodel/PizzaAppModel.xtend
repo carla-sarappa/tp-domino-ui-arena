@@ -31,4 +31,5 @@ class PizzaAppModel extends ConIngredienteAppModel<Pizza>{
 		Repositories.getPizzas()
 	}
 	
+	
 }

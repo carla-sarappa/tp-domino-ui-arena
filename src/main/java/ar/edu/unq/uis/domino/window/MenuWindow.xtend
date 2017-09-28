@@ -41,13 +41,9 @@ class MenuWindow extends SimpleWindow<MenuAppModel> {
 	
 	override protected createFormPanel(Panel mainPanel) {
 		
-		new PizzaTablaEditable(mainPanel, modelObject.pizzaTablaEditableAppModel, this) => [
-			nombreTabla = "Promos"
-		]
+		new PizzaTablaEditable(mainPanel, modelObject.pizzaTablaEditableAppModel, this) 
 		 
-		new IngredienteTablaEditable(mainPanel, modelObject.ingredienteTablaEditableAppModel, this) => [
-			nombreTabla = "Ingredientes disponibles"
-		]
+		new IngredienteTablaEditable(mainPanel, modelObject.ingredienteTablaEditableAppModel, this) 
 
 	}
 	

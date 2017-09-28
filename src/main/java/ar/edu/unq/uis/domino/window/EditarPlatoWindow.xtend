@@ -18,6 +18,7 @@ import ar.edu.unq.uis.domino.appmodel.PlatoAppModel
 import org.uqbar.arena.widgets.Button
 import org.uqbar.arena.windows.Dialog
 import org.uqbar.commons.model.utils.ObservableUtils
+import ar.edu.unq.uis.domino.adapters.MoneyAdapter
 
 class EditarPlatoWindow extends EditarConIngredientesWindow<PlatoAppModel>{
 	
@@ -49,8 +50,9 @@ class EditarPlatoWindow extends EditarConIngredientesWindow<PlatoAppModel>{
 		new Selector(dropdown) => [
             value <=> "elemento.pizzaBase"
             val bindingItems = items <=> "pizzas"
-     		bindingItems.adapter = new PropertyAdapter(typeof(Pizza), "nombre")
-            width = 220
+     		bindingItems.adapter = new PropertyAdapter(typeof(Pizza), "nombreConPrecio")
+     		
+            width = 400
             height = 220
 		]	
 		
@@ -60,7 +62,7 @@ class EditarPlatoWindow extends EditarConIngredientesWindow<PlatoAppModel>{
             value <=> "elemento.tamanio"
             val bindingItems = items <=> "tamanios"
      		bindingItems.adapter = new PropertyAdapter(typeof(Tamanio), "nombre")
-            width = 220
+            width = 400
             height = 220
 		]	
 		
@@ -79,7 +81,7 @@ class EditarPlatoWindow extends EditarConIngredientesWindow<PlatoAppModel>{
 		val precio = new Panel(mainPanel).layout = new ColumnLayout(2)
 		new Label(precio).text = "Precio"
 		new Label(precio) => [
-		    value <=> "elemento.precio"
+		    bindValueToProperty("elemento.precio").setTransformer(new MoneyAdapter())
 		]
 	}
 	
