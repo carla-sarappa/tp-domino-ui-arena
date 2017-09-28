@@ -17,15 +17,12 @@ import ar.edu.unq.uis.domino.model.RetiraPorElLocal
 import ar.edu.unq.uis.domino.model.Plato
 import ar.edu.unq.uis.domino.repo.RepoPlato
 import ar.edu.unq.uis.domino.model.Tamanio
+import ar.edu.unq.uis.domino.repo.Repositories
 
 class DominoBootstrap extends CollectionBasedBootstrap {
 	
 	new() {
-		ApplicationContext.instance.configureSingleton(typeof(Pizza), new RepoPizza)
-		ApplicationContext.instance.configureSingleton(typeof(Ingrediente), new RepoIngredientes)
-		ApplicationContext.instance.configureSingleton(typeof(Distribucion), new RepoDistribucion)
-		ApplicationContext.instance.configureSingleton(typeof(Pedido), new RepoPedido)
-		ApplicationContext.instance.configureSingleton(typeof(Plato), new RepoPlato)
+		Repositories.init
 	}
 	
 	override run() {
