@@ -9,32 +9,44 @@ import ar.edu.unq.uis.domino.model.Pizza
 import org.eclipse.xtend.lib.annotations.Accessors
 import ar.edu.unq.uis.domino.model.Distribucion
 import ar.edu.unq.uis.domino.repo.RepoDistribucion
+import ar.edu.unq.uis.domino.repo.RepoPlato
 import ar.edu.unq.uis.domino.model.IngredienteDistribuido
 import org.uqbar.commons.model.annotations.Dependencies
 import ar.edu.unq.uis.domino.repo.Repositories
 import ar.edu.unq.uis.domino.model.Pedido
 import ar.edu.unq.uis.domino.model.Plato
 import java.util.List
+import java.util.ArrayList
 
 @Accessors
 @TransactionalAndObservable
 class PedidoAppModel extends ElementoAppModel<Pedido>{
 	Plato platoSeleccionado
+	Double monto
+	List<Plato> platos
 		
 	override getRepository() {
 		Repositories.getPedidos()
 	}
 	
-	def refresh() {
-		ObservableUtils.firePropertyChanged(this, "elemento")
-		ObservableUtils.firePropertyChanged(this.elemento, "platos")
-		ObservableUtils.firePropertyChanged(this, "platoSeleccionado")
-		ObservableUtils.firePropertyChanged(this, "monto")
+	def calcular() {
+		monto = elemento.monto
+		platos = new ArrayList()
+		platos = getPlatosFromRepo()
+		ObservableUtils.firePropertyChanged(this, "platos")
 	}
 	
-	@Dependencies("elemento.platos")
-	def double getMonto(){
-		return elemento.monto
+	def getPlatosFromRepo(){
+//		elemento.platos
+		Repositories.getPlatos().allInstances.filter [it.pedido == elemento].toList
+	}
+
+	def eliminarSeleccionado() {
+		if (platoSeleccionado == null){
+			return
+		}
+		Repositories.getPlatos().delete(platoSeleccionado)
+		calcular
 	}
 	
 }

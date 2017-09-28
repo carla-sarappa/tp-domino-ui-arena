@@ -13,7 +13,6 @@ import org.uqbar.commons.model.annotations.TransactionalAndObservable
 @TransactionalAndObservable
 abstract class ElementoAppModel<T extends Entity> {
 	T elemento
-	
 
 	def guardar(){
 		if (elemento.isNew) {
@@ -23,10 +22,6 @@ abstract class ElementoAppModel<T extends Entity> {
 		}	
 	}
 	
-//	def List<T> getElementos(){
-//		getRepository().allInstances
-//	}
-	
-	abstract def CollectionBasedRepo<T> getRepository() 
+	abstract def CollectionBasedRepo<T> getRepository()
 	
 }

@@ -16,18 +16,23 @@ import ar.edu.unq.uis.domino.model.Tamanio
 import org.uqbar.arena.windows.SimpleWindow
 import ar.edu.unq.uis.domino.appmodel.PlatoAppModel
 import org.uqbar.arena.widgets.Button
+import org.uqbar.arena.windows.Dialog
+import org.uqbar.commons.model.utils.ObservableUtils
 
 class EditarPlatoWindow extends TransactionalDialog<PlatoAppModel>{
 	
 	new(WindowOwner owner, Plato plato) {
-		super(owner, createViewModel(plato))
-		title = defaultTitle()
+		this(owner, createViewModel(plato))
 		
+	}
+
+	new(WindowOwner owner, PlatoAppModel model) {
+		super(owner, model)
+		title = defaultTitle()
 	}
 	
 	static def createViewModel(Plato plato){
-		val model = new PlatoAppModel
-		model.elemento = plato
+		val model = new PlatoAppModel(plato)
 		return model
 	}
 	
@@ -59,6 +64,11 @@ class EditarPlatoWindow extends TransactionalDialog<PlatoAppModel>{
             height = 220
 		]	
 		
+		crearPanelAgregados(mainPanel)
+	}
+	
+	def crearPanelAgregados(Panel mainPanel){
+		
 	}
 		
 	
@@ -67,7 +77,9 @@ class EditarPlatoWindow extends TransactionalDialog<PlatoAppModel>{
 			caption = "Aceptar"
 			onClick [|
 				this.accept
+					
 			]	
+			
 		]
 
 		new Button(actions) => [

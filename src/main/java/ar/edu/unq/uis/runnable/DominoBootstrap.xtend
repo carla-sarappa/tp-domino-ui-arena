@@ -64,23 +64,28 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		
 		val cliente = new Cliente("carla.sarappa","c@c.c")
 		cliente.setNombre("Carla")
-		val calabresaGrande = new Plato(calabresa, Tamanio.GRANDE)
 	
 		val repoPedido = ApplicationContext.instance.getSingleton(typeof(Pedido)) as RepoPedido
+		val pedido4 = repoPedido.createPedido(cliente, new RetiraPorElLocal, "pedido 4")
+		val pedido5 = repoPedido.createPedido(cliente, new RetiraPorElLocal, "pedido 5")
+		
 		
 		repoPedido => [
-			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 1").agregarPlato(calabresaGrande)
+			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 1")
 			createPedido(cliente, new Delivery("calle falsa 123"), "pedido cliente 2")
 			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 3")
 		]
 		
-//		val repoPlato = ApplicationContext.instance.getSingleton(typeof(Plato)) as RepoPlato
-//		
-//		repoPlato => [
-//			createPlato(pizz)
-//			createPedido(cliente, new Delivery("calle falsa 123"), "pedido cliente 2")
-//			createPedido(cliente, new RetiraPorElLocal, "pedido cliente 3")
-//		]
+		
+		val repoPlato = ApplicationContext.instance.getSingleton(typeof(Plato)) as RepoPlato
+		val calabresaGrande = repoPlato.createPlato(calabresa, Tamanio.FAMILIAR, pedido4)
+		
+		repoPlato => [
+			createPlato(calabresa, Tamanio.GRANDE, pedido5)
+			createPlato(calabresa, Tamanio.CHICA, pedido5)
+			createPlato(calabresa, Tamanio.PORCION, pedido5)
+			
+		]
 	}
 	
 }

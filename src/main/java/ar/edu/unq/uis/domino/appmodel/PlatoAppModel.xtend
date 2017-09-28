@@ -8,11 +8,19 @@ import java.util.List
 import ar.edu.unq.uis.domino.model.Pizza
 import ar.edu.unq.uis.domino.model.Tamanio
 import org.uqbar.commons.model.utils.ObservableUtils
+import ar.edu.unq.uis.domino.model.Pedido
 
 @Accessors
 @TransactionalAndObservable
 class PlatoAppModel extends ElementoAppModel<Plato>{
 	
+	new(Pedido pedido){
+		this.elemento = new Plato(getPizzas.head, getTamanios.head, pedido)
+	}
+	
+	new (Plato plato){
+		this.elemento = plato
+	}
 	
 	override getRepository() {
 		Repositories.getPlatos()
@@ -26,6 +34,5 @@ class PlatoAppModel extends ElementoAppModel<Plato>{
 		Tamanio.tamanios
 	}
 	
-
 	
 }

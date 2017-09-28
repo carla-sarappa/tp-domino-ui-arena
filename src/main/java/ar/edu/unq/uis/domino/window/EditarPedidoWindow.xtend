@@ -23,12 +23,14 @@ import org.uqbar.arena.widgets.TextBox
 import org.uqbar.arena.windows.WindowOwner
 import ar.edu.unq.uis.domino.appmodel.PedidoAppModel
 import org.uqbar.arena.aop.windows.TransactionalDialog
+import org.uqbar.arena.windows.ErrorsPanel
+import org.uqbar.arena.bindings.NotNullObservable
 
 class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	
 	new(WindowOwner owner, Pedido pedido) {
 		super(owner, createViewModel(pedido))
-		
+		modelObject.calcular
 	}
 	
 	static def createViewModel(Pedido pedido){
@@ -41,6 +43,10 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	override def createMainTemplate(Panel mainPanel) {
 		title = "Editar pedido"		
 		super.createMainTemplate(mainPanel)
+	}
+	
+	override ErrorsPanel createErrorsPanel(Panel mainPanel) {
+		return new ErrorsPanel(mainPanel, this.getTaskDescription(), 2);
 	}
 	
 	override protected createFormPanel(Panel mainPanel) {
@@ -73,21 +79,24 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	def crearBotonera(Panel panel) {
 		new Button(panel) => [
 			caption = "Agregar"
-			onClick([| ])
+			onClick([| abrirAgregarPlato])
 			visible <=> "elemento.estado.abierto"
 		]
+		
+		val elementSelected = new NotNullObservable("platoSeleccionado")
 
 		new Button(panel) => [
 			caption = "Editar"
 			onClick([| abrirEdicionPlato])
 			visible <=> "elemento.estado.abierto"
-			
+			bindEnabled(elementSelected)	
 		]	
+		
 		new Button(panel) => [
 			caption = "Eliminar"
-			onClick([| ])	
+			onClick([| modelObject.eliminarSeleccionado])	
 			visible <=> "elemento.estado.abierto"
-			
+			bindEnabled(elementSelected)
 		]
 
 	}
@@ -95,7 +104,7 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	
 	def protected createResultsGrid(Panel mainPanel) {
 		val table = new Table<Plato>(mainPanel, typeof(Plato)) => [
-			items <=> "elemento.platos"
+			items <=> "platos"
 			value <=> "platoSeleccionado"
 			numberVisibleRows = 12
 		]
@@ -158,10 +167,21 @@ class EditarPedidoWindow extends TransactionalDialog<PedidoAppModel>{
 	}
 	
 	def void abrirEdicionPlato(){
+		if (modelObject.platoSeleccionado == null){
+			throw new RuntimeException("Se debe seleccionar un plato")
+		}
 		val window = new EditarPlatoWindow(this, modelObject.platoSeleccionado)
-		window.onAccept[ | modelObject.refresh]
+		window.onAccept[ | modelObject.calcular]
 		window.open
 	}
+	
+	def void abrirAgregarPlato(){
+		val window = new AgregarPlatoWindow(this, modelObject.elemento)
+		window.onAccept[ | modelObject.calcular ]
+		window.open
+	}
+	
+	
 
 	override protected addActions(Panel actions){
 		new Button(actions) => [
