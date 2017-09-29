@@ -115,6 +115,7 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 			createPlato(napolitana, Tamanio.PORCION, pedido4)
 			
 			createPlato(cuatroQuesos, Tamanio.PORCION, pedido5)
+			createPlato(cuatroQuesos, Tamanio.PORCION, pedido6)
 		]
 	}
 	
