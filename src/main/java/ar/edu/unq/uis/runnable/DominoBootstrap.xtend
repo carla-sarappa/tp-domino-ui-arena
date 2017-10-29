@@ -81,21 +81,21 @@ class DominoBootstrap extends CollectionBasedBootstrap {
 		val maria = new Cliente("maria","maria@maria.com", "Maria Lopez")
 	
 		val repoPedido = ApplicationContext.instance.getSingleton(typeof(Pedido)) as RepoPedido
-		val pedido1 = repoPedido.createPedido(carlaSarappa, new RetiraPorElLocal, "Pedido 1")
+		val pedido1 = repoPedido.createPedido(carlaSarappa, new RetiraPorElLocal)
 		pedido1.fecha = new Date(System.currentTimeMillis - minutos(40))
-		val pedido2 = repoPedido.createPedido(gisele, new RetiraPorElLocal, "Pedido 2")
+		val pedido2 = repoPedido.createPedido(gisele, new RetiraPorElLocal)
 		pedido2.fecha = new Date(System.currentTimeMillis - minutos(20))
-		val pedido3 = repoPedido.createPedido(fede, new RetiraPorElLocal, "Pedido 3")
-		val pedido4 = repoPedido.createPedido(carlaSarappa, new Delivery("calle falsa 123"), "Pedido 4")
-		val pedido5 = repoPedido.createPedido(maria, new RetiraPorElLocal, "Pedido 5")
-		val pedido6 = repoPedido.createPedido(maria, new Delivery("Lebenshon 44"), "Pedido 6")
+		val pedido3 = repoPedido.createPedido(fede, new RetiraPorElLocal)
+		val pedido4 = repoPedido.createPedido(carlaSarappa, new Delivery("calle falsa 123"))
+		val pedido5 = repoPedido.createPedido(maria, new RetiraPorElLocal)
+		val pedido6 = repoPedido.createPedido(maria, new Delivery("Lebenshon 44"))
 		
-		val pedido7 = repoPedido.createPedido(gisele, new RetiraPorElLocal, "Pedido 7")
+		val pedido7 = repoPedido.createPedido(gisele, new RetiraPorElLocal)
 		pedido7.fecha = new Date("2017/09/22")
 		pedido7.estado = new Cancelado
 		
 		
-		val pedido8 = repoPedido.createPedido(gisele, new RetiraPorElLocal, "Pedido 8")
+		val pedido8 = repoPedido.createPedido(gisele, new RetiraPorElLocal)
 		pedido8.fecha = new Date("2017/09/27")
 		pedido8.estado = new Entregado
 		pedido8.fechaCerrado = new Date()
